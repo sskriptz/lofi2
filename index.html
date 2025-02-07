@@ -8,6 +8,10 @@
         <script src="script.js"></script>
         <link rel="icon" type="image/x-icon" href="https://i.postimg.cc/L57zM3xW/headphones.png">
 
+        <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&family=IBM+Plex+Mono:wght@300&family=Inconsolata:wght@200..900&family=Saira+Condensed:wght@200&display=swap" rel="stylesheet">
@@ -21,6 +25,24 @@
         <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
     </head>
     <body>
+
+        <h1>Clicker Game</h1>
+    
+    <button id="sign-in-btn">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/2048px-Google_%22G%22_logo.svg.png" alt="Google Logo">
+        Sign in with Google
+    </button>
+    
+    <button id="sign-out-btn">Sign Out</button>
+
+    <div id="user-info"></div>
+
+    <div id="clicker-game" style="display: none;">
+        <h2>Clicks: <span id="score">0</span></h2>
+        <button id="click-button">Click Me!</button>
+    </div>
+
+    <button id="leaderboard-btn" onclick="window.location.href='leaderboard.html'">View Leaderboard</button>
 
         <div id="rainGif">
             <img src="https://i.pinimg.com/originals/91/95/f4/9195f4dd1b69f90038f627c8af422429.gif" id="rainGifImage">
