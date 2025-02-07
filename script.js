@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-
+    window.addEventListener("load", () => {
+        document.body.style.opacity = "1"; // Trigger fade-in
+    });
 
 
     
@@ -864,10 +866,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ------------------ END OF CLOCK JS -----------------------
-
-
-    window.addEventListener("load", () => {
-        document.body.style.opacity = "1"; // Trigger fade-in
-    });
 
 });
