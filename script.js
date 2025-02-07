@@ -1,9 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    window.addEventListener("load", () => {
-        document.body.style.opacity = "1"; // Trigger fade-in
-    });
-
 
     
     // ------------------ END OF INITIALIZATION CODE FOR NEWCOMERS -------------------------
