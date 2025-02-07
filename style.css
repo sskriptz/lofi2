@@ -13,7 +13,6 @@ body {
     background-attachment: fixed;
     height: 100vh;
     cursor: url('https://i.ibb.co/60tk0khC/image-removebg-preview-1-1-optimized.png'), auto;
-    opacity: 0;
     transition: opacity 1s ease-in-out;
     font-family: "Inconsolata", monospace;
 }
