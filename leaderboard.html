@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .leaderboard {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        .player {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .player img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Leaderboard</h1>
+    <div class="leaderboard" id="leaderboard"></div>
+
+    <script>
+        Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAwUAqTV07AahyfD55owmyAcxDG3TP_KnI",
+            authDomain: "lofi-168cb.firebaseapp.com",
+            projectId: "lofi-168cb",
+            storageBucket: "lofi-168cb.appspot.com",
+            messagingSenderId: "331670095312",
+            appId: "1:331670095312:web:7538041673a10b1b4aa5d5"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+
+        // Check if user is signed in
+        auth.onAuthStateChanged(user => {
+            if (!user) {
+                window.location.href = "index.html"; // Redirect to sign-in page
+            } else {
+                loadLeaderboard();
+            }
+        });
+
+        // Load leaderboard data
+        function loadLeaderboard() {
+            db.collection("users").orderBy("score", "desc").limit(10).get()
+                .then(snapshot => {
+                    const leaderboard = document.getElementById("leaderboard");
+                    leaderboard.innerHTML = "";
+                    snapshot.forEach(doc => {
+                        const user = doc.data();
+                        leaderboard.innerHTML += `
+                            <div class="player">
+                                <div>
+                                    <img src="${user.photoURL || 'https://via.placeholder.com/40'}" alt="Profile">
+                                    ${user.name || 'Anonymous'}
+                                </div>
+                                <div>Score: ${user.score}</div>
+                            </div>
+                        `;
+                    });
+                });
+        }
+    </script>
+</body>
+</html>
