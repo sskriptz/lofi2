@@ -1,6 +1,111 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+    const firebaseConfig = {
+            apiKey: "AIzaSyAwUAqTV07AahyfD55owmyAcxDG3TP_KnI",
+            authDomain: "lofi-168cb.firebaseapp.com",
+            projectId: "lofi-168cb",
+            storageBucket: "lofi-168cb.appspot.com",
+            messagingSenderId: "331670095312",
+            appId: "1:331670095312:web:7538041673a10b1b4aa5d5"
+        };
 
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        const signInBtn = document.getElementById("sign-in-btn");
+        const signOutBtn = document.getElementById("sign-out-btn");
+        const userInfo = document.getElementById("user-info");
+        const clickerGame = document.getElementById("clicker-game");
+        const clickButton = document.getElementById("click-button");
+        const scoreDisplay = document.getElementById("score");
+        const leaderboardBtn = document.getElementById("leaderboard-btn");
+
+        let userScore = 0;
+        let userId = null;
+
+        // Sign out
+        signOutBtn.onclick = () => {
+            auth.signOut().then(() => {
+                // Reset UI
+                userInfo.innerHTML = "";
+                signInBtn.style.display = "block";
+                signOutBtn.style.display = "none";
+                clickerGame.style.display = "none";
+                leaderboardBtn.style.display = "none";
+                
+                // Clear the userId to prevent issues on the next sign-in
+                userId = null;
+                userScore = 0; // Reset local score to avoid issues
+                scoreDisplay.textContent = userScore;
+            });
+        };
+
+        // Load user data after sign-in
+        function loadUserScore() {
+            if (userId) {
+                db.collection("users").doc(userId).get().then(doc => {
+                    if (doc.exists) {
+                        userScore = doc.data().score || 0; // Set score from Firestore or default to 0
+                        scoreDisplay.textContent = userScore;
+                    } else {
+                        // If the document doesn't exist, initialize it with 0 score
+                        db.collection("users").doc(userId).set({
+                            score: 0
+                        });
+                    }
+                });
+            }
+        }
+
+        // Sign in with Google
+        signInBtn.onclick = () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider).then(result => {
+                const user = result.user;
+                userId = user.uid;
+                updateUI(user);  // Update UI after successful sign-in
+                loadUserScore();  // Load the user's score from Firestore
+            }).catch(error => console.error(error));
+        };
+
+        // Update the user's score in Firestore
+        function updateUserScore() {
+            if (userId) {
+                db.collection("users").doc(userId).update({ score: userScore })
+                    .then(() => {
+                        scoreDisplay.textContent = userScore;
+                    }).catch(error => console.error(error));
+            }
+        }
+
+        // Click event to increase score
+        clickButton.onclick = () => {
+            userScore++;
+            updateUserScore(); // Update Firestore score on click
+        };
+
+        // Update UI after sign-in
+        function updateUI(user) {
+            if (user) {
+                userInfo.innerHTML = `<p>Welcome, ${user.displayName}</p>
+                                      <img src="${user.photoURL}" width="50" style="border-radius:50%">`;
+                signInBtn.style.display = "none";
+                signOutBtn.style.display = "block";
+                clickerGame.style.display = "block";
+                leaderboardBtn.style.display = "block";
+            }
+        }
+
+        // Check auth state on page load
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                updateUI(user);
+                userId = user.uid;
+                loadUserScore();  // Load the score for the newly signed-in user
+            }
+        });
     
     // ------------------ END OF INITIALIZATION CODE FOR NEWCOMERS -------------------------
     
