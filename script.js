@@ -29,11 +29,11 @@ let userId = null;
 // Hide sign-in button by default
 signInBtn.style.display = "none";
 
-// Initially hide all relevant UI elements for logged-in users
-signOutBtn.style.display = "none"; 
-leaderboardBtn.style.display = "none"; 
-clickerGame.style.display = "none"; 
-toggleClickerBtn.style.display = "none"; 
+// Ensure UI Elements Are Always Visible (Development Mode)
+signOutBtn.style.display = "none"; // Initially hide the sign-out button
+leaderboardBtn.style.display = "none"; // Hide the leaderboard button by default
+clickerGame.style.display = "none"; // Hide the game section initially
+toggleClickerBtn.style.display = "none"; // Hide the toggle clicker button initially
 
 // Sign-in with Google (Manually triggered)
 function signInWithGoogle() {
@@ -43,21 +43,13 @@ function signInWithGoogle() {
         userId = user.uid;
         updateUI(user);  // Update UI after successful sign-in
         loadUserScore();  // Load the user's score from Firestore
-    }).catch(error => console.error(error));
+    }).catch(error => console.error("Sign-in error:", error));
 }
 
 // Sign-out functionality
 signOutBtn.onclick = () => {
     auth.signOut().then(() => {
-        userInfo.innerHTML = "";  // Clear user info after sign-out
-        userId = null;
-        userScore = 0;
-        scoreDisplay.textContent = userScore;
-        signInBtn.style.display = "block";  // Show sign-in button again
-        signOutBtn.style.display = "none";  // Hide sign-out button
-        leaderboardBtn.style.display = "none"; // Hide leaderboard button
-        clickerGame.style.display = "none"; // Hide game panel
-        toggleClickerBtn.style.display = "none"; // Hide toggle button
+        resetUI();  // Reset UI after sign-out
     });
 };
 
@@ -96,13 +88,26 @@ clickButton.onclick = () => {
 function updateUI(user) {
     if (user) {
         userInfo.innerHTML = `<img src="${user.photoURL}" width="50" style="border-radius:50%">
-        <p>Welcome, ${user.displayName}</p>`;
+                              <p>Welcome, ${user.displayName}</p>`;
         signInBtn.style.display = "none"; // Hide sign-in button after sign-in
         signOutBtn.style.display = "block"; // Show sign-out button after sign-in
         leaderboardBtn.style.display = "block"; // Show leaderboard button after sign-in
         clickerGame.style.display = "block"; // Show game panel after sign-in
         toggleClickerBtn.style.display = "block"; // Show toggle clicker button after sign-in
     }
+}
+
+// Reset UI after sign-out
+function resetUI() {
+    userInfo.innerHTML = "";  // Clear user info
+    userId = null;
+    userScore = 0;
+    scoreDisplay.textContent = userScore;
+    signInBtn.style.display = "block";  // Show sign-in button
+    signOutBtn.style.display = "none";  // Hide sign-out button
+    leaderboardBtn.style.display = "none"; // Hide leaderboard button
+    clickerGame.style.display = "none"; // Hide game panel
+    toggleClickerBtn.style.display = "none"; // Hide toggle button
 }
 
 // Check auth state on page load
@@ -112,12 +117,11 @@ auth.onAuthStateChanged(user => {
         userId = user.uid;
         loadUserScore();
     } else {
-        // User is not signed in, keep the sign-in button visible
         signInBtn.style.display = "block";
-        signOutBtn.style.display = "none"; // Hide sign-out button if not signed in
-        leaderboardBtn.style.display = "none"; // Hide leaderboard button if not signed in
-        clickerGame.style.display = "none"; // Hide game panel if not signed in
-        toggleClickerBtn.style.display = "none"; // Hide toggle button if not signed in
+        signOutBtn.style.display = "none";
+        leaderboardBtn.style.display = "none";
+        clickerGame.style.display = "none";
+        toggleClickerBtn.style.display = "none";
     }
 });
 
