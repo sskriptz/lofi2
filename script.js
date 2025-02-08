@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    // Firebase Configuration
+// Firebase Configuration
 const firebaseConfig = {
     apiKey: "AIzaSyAwUAqTV07AahyfD55owmyAcxDG3TP_KnI",
     authDomain: "lofi-168cb.firebaseapp.com",
@@ -23,32 +23,36 @@ const clickerGame = document.getElementById("clicker-game");
 const clickButton = document.getElementById("click-button");
 const scoreDisplay = document.getElementById("score");
 const leaderboardBtn = document.getElementById("leaderboard-btn");
+const toggleClickerBtn = document.getElementById("toggle-clicker-btn");
 
 let userScore = 0;
 let userId = null;
 
-// Hide sign-in button completely
+// Hide sign-in button completely by default (show only when signed out)
 signInBtn.style.display = "none";
 
-// Ensure UI Elements Are Always Visible (Development Mode)
-signOutBtn.style.display = "block";
-leaderboardBtn.style.display = "block";
-clickerGame.style.display = "block";
-
-// Show Default Guest Info When Not Signed In
-userInfo.innerHTML = `<p>Welcome, Guest</p>
-                      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJg75LWB1zIJt1VTZO7O68yKciaDSkk3KMdw&s" width="50" style="border-radius:50%">`;
-scoreDisplay.textContent = 0;
+// Hide the clicker game UI, leaderboard button, and sign-out button initially
+clickerGame.style.display = "none";
+leaderboardBtn.style.display = "none";
+signOutBtn.style.display = "none";
+toggleClickerBtn.style.display = "none";
 
 // Sign out functionality
 signOutBtn.onclick = () => {
     auth.signOut().then(() => {
-        // Reset UI to guest mode
-        userInfo.innerHTML = `<p>Welcome, Guest</p>
-                              <img src="https://via.placeholder.com/50" width="50" style="border-radius:50%">`;
+        // Reset UI to logged-out state
+        userInfo.innerHTML = '';  // Clear the user info
         userId = null;
         userScore = 0;
-        scoreDisplay.textContent = userScore;
+
+        // Hide UI elements for logged-in users
+        clickerGame.style.display = "none";
+        leaderboardBtn.style.display = "none";
+        signOutBtn.style.display = "none";
+        toggleClickerBtn.style.display = "none";  // Hide the toggle clicker button when logged out
+
+        // Show the sign-in button again
+        signInBtn.style.display = "block";  
     });
 };
 
@@ -57,10 +61,9 @@ function loadUserScore() {
     if (userId) {
         db.collection("users").doc(userId).get().then(doc => {
             if (doc.exists) {
-                userScore = doc.data().score || 0; // Set score from Firestore or default to 0
+                userScore = doc.data().score || 0;
                 scoreDisplay.textContent = userScore;
             } else {
-                // If the document doesn't exist, initialize it with 0 score
                 db.collection("users").doc(userId).set({ score: 0 });
             }
         });
@@ -97,8 +100,16 @@ clickButton.onclick = () => {
 // Update UI after sign-in
 function updateUI(user) {
     if (user) {
-        userInfo.innerHTML = `<img src="${user.photoURL}" width="50" style="border-radius:50%">
-        <p>Welcome, ${user.displayName}</p>`;
+        userInfo.innerHTML = `
+            <img src="${user.photoURL}" width="50" style="border-radius:50%">
+            <p>Welcome, ${user.displayName}</p>
+        `;
+        // Show signed-in UI elements
+        clickerGame.style.display = "block";
+        leaderboardBtn.style.display = "block";
+        signOutBtn.style.display = "block";
+        toggleClickerBtn.style.display = "block";  // Show the toggle clicker button when logged in
+        signInBtn.style.display = "none";  // Hide the sign-in button once signed in
     }
 }
 
@@ -109,12 +120,26 @@ auth.onAuthStateChanged(user => {
         userId = user.uid;
         loadUserScore();
     } else {
-        // Keep UI visible but show guest mode
-        userInfo.innerHTML = `<p>Welcome, Guest</p>
-                              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJg75LWB1zIJt1VTZO7O68yKciaDSkk3KMdw&s" width="50" style="border-radius:50%">`;
-        scoreDisplay.textContent = 0; // Reset score display
+        // Hide the UI elements for logged-out users
+        userInfo.innerHTML = ''; // Clear the user info when logged out
+        clickerGame.style.display = "none";
+        leaderboardBtn.style.display = "none";
+        signOutBtn.style.display = "none";
+        toggleClickerBtn.style.display = "none"; // Hide the toggle clicker button when logged out
+        signInBtn.style.display = "block";  // Show the sign-in button again when logged out
     }
 });
+
+// Initialize the UI immediately if the user is logged out
+if (!auth.currentUser) {
+    userInfo.innerHTML = '';  // Ensure no guest message
+    clickerGame.style.display = "none";
+    leaderboardBtn.style.display = "none";
+    signOutBtn.style.display = "none";
+    toggleClickerBtn.style.display = "none";  // Hide toggle clicker button when logged out
+    signInBtn.style.display = "block";  // Show the sign-in button when logged out
+}
+
 
 
     
