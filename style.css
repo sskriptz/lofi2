@@ -561,7 +561,7 @@ main {
     backdrop-filter: blur(3px);
     box-shadow: 5px 10px #000000;
     width: 100%;
-    height: 40vh;
+    height: 37vh;
 
     /* Smooth transition for hover and unhover */
     transition: transform 0.3s ease-in-out, backdrop-filter 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
@@ -967,10 +967,9 @@ main {
     margin-top: 13%;
 }
 
-/* Profile Container */
 .profileContainer {
     display: flex;
-    flex-direction: column; /* Maintain the column layout */
+    flex-direction: column;
     justify-content: center;
     background: white;
     padding: 1rem;
@@ -978,30 +977,19 @@ main {
     background-color: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(3px);
     box-shadow: 5px 10px #000000;
-    height: auto; /* Adjust height dynamically */
+    height: auto;
     width: 100%;
     margin-top: var(--verticalGap);
-
-    /* Smooth transition for both hover and unhover */
     transition: transform 0.3s ease-in-out, backdrop-filter 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-/* User Info Container */
 .userInfoContainer {
     display: flex;
-    flex-direction: row; /* Align user info on the same row */
-    align-items: center; /* Align profile picture and text vertically */
-    gap: 15px; /* Space between profile pic and text */
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
 }
 
-/* User Info Text and Profile Picture */
-#user-info {
-    display: flex;
-    align-items: center; /* Align profile picture and text in the same row */
-    gap: 10px; /* Space between image and text */
-}
-
-/* Sign-In Button */
 #sign-in-btn {
     padding: 12px 24px;
     font-size: 16px;
@@ -1025,7 +1013,6 @@ main {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Sign-Out Button */
 #sign-out-btn {
     display: none;
     padding: 12px 24px;
@@ -1033,7 +1020,6 @@ main {
     color: white;
     border: none;
     border-radius: 5px;
-    margin-top: 20px;
     cursor: pointer;
     transition: background-color 0.3s, box-shadow 0.3s;
 }
@@ -1043,48 +1029,125 @@ main {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Toggle Clicker Button */
 #toggle-clicker-btn {
-    margin-left: 20px; /* Space between profile info and toggle button */
     padding: 12px 24px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
+    font-size: 16px;
+    background: white;
+    border: 1px solid #ddd;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s, box-shadow 0.3s;
+    margin-left: 10px;
+    white-space: nowrap; /* Prevents text from wrapping */
+    flex-shrink: 0; /* Prevents button from shrinking */
+    width: auto; /* Ensure it stays as wide as needed for its content */
 }
 
 #toggle-clicker-btn:hover {
-    background-color: #45a049;
+    background-color: #f4f4f4;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Clicker Game Section */
-#clicker-game {
-    margin-top: 20px;
+
+/* Flex container for the Click Me button and the Clicks text */
+.clicker-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
 }
 
-/* Leaderboard Button */
-#leaderboard-btn, #sign-out-btn {
+.clicker-container h2 {
+    margin: 0;
+}
+
+/* Flex container for the buttons (Leaderboard and Sign Out) */
+.button-container {
+    display: flex;
+    width: 100%;
     margin-top: 10px;
+}
+
+.button-container button {
+    flex: 1;  /* Makes each button take up 50% width */
     padding: 12px 24px;
+    font-size: 16px;
     background-color: #4CAF50;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s, box-shadow 0.3s;
+    margin-right: 5px;  /* Adds some space between the buttons */
 }
 
-#leaderboard-btn:hover, #sign-out-btn:hover {
+.button-container button:last-child {
+    margin-right: 0;  /* Removes the margin from the last button */
+}
+
+.button-container button:hover {
     background-color: #45a049;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Optional: Reset button margin-top if needed */
-#leaderboard-btn {
-    margin-top: 10px;
+/* User Info layout for the profile picture, welcome message, and toggle clicker button */
+.user-info-flex {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+#user-info {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+}
+
+#user-info img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+#user-info p {
+    margin: 0;
+}
+
+/* Adjusting position for the toggle-clicker button */
+#toggle-clicker-btn {
+    margin-left: auto; /* Pushes the button to the right */
+}
+
+#click-button {
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#click-button:hover {
+    background-color: #45a049;
+    transform: scale(1.05); /* Adds a slight scale effect on hover */
+}
+
+#click-button:active {
+    background-color: #3e8e41; /* Slightly darker on active */
+}
+
+#click-button .click-icon {
+    width: 20px;
+    margin-right: 10px; /* Spacing between icon and text */
 }
 
 
