@@ -967,6 +967,24 @@ main {
     margin-top: 13%;
 }
 
+.profileContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: white;
+    padding: 1rem;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(3px);
+    box-shadow: 5px 10px #000000;
+    height: 10vh;
+    width: 100%;
+    margin-top: var(--verticalGap);
+
+    /* Smooth transition for both hover and unhover */
+    transition: transform 0.3s ease-in-out, backdrop-filter 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
 #sign-in-btn {
     padding: 12px 24px;
     font-size: 16px;
@@ -977,10 +995,7 @@ main {
     justify-content: center;
     cursor: pointer;
     border-radius: 5px;
-    margin-top: 50px;
     transition: background-color 0.3s, box-shadow 0.3s;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 #sign-in-btn img {
