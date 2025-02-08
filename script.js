@@ -99,13 +99,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // Check auth state on page load
+        // Check auth state on page load
         auth.onAuthStateChanged(user => {
             if (user) {
                 updateUI(user);
                 userId = user.uid;
                 loadUserScore();  // Load the score for the newly signed-in user
+                leaderboardBtn.style.display = "block"; // Show leaderboard button
+            } else {
+                leaderboardBtn.style.display = "none"; // Hide leaderboard button when user is not signed in
+                signInBtn.style.display = "block";
+                signOutBtn.style.display = "none";
+                clickerGame.style.display = "none";
+                userInfo.innerHTML = "";
             }
         });
+
     
     // ------------------ END OF INITIALIZATION CODE FOR NEWCOMERS -------------------------
     
