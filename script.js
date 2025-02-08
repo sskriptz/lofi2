@@ -28,49 +28,16 @@ const toggleClickerBtn = document.getElementById("toggle-clicker-btn");
 let userScore = 0;
 let userId = null;
 
-// Hide sign-in button completely by default (show only when signed out)
+// Hide sign-in button by default
 signInBtn.style.display = "none";
 
-// Hide the clicker game UI, leaderboard button, and sign-out button initially
-clickerGame.style.display = "none";
-leaderboardBtn.style.display = "none";
-signOutBtn.style.display = "none";
-toggleClickerBtn.style.display = "none";
+// Initially hide all relevant UI elements for logged-in users
+signOutBtn.style.display = "none"; 
+leaderboardBtn.style.display = "none"; 
+clickerGame.style.display = "none"; 
+toggleClickerBtn.style.display = "none"; 
 
-// Sign out functionality
-signOutBtn.onclick = () => {
-    auth.signOut().then(() => {
-        // Reset UI to logged-out state
-        userInfo.innerHTML = '';  // Clear the user info
-        userId = null;
-        userScore = 0;
-
-        // Hide UI elements for logged-in users
-        clickerGame.style.display = "none";
-        leaderboardBtn.style.display = "none";
-        signOutBtn.style.display = "none";
-        toggleClickerBtn.style.display = "none";  // Hide the toggle clicker button when logged out
-
-        // Show the sign-in button again
-        signInBtn.style.display = "block";  
-    });
-};
-
-// Load user data after sign-in
-function loadUserScore() {
-    if (userId) {
-        db.collection("users").doc(userId).get().then(doc => {
-            if (doc.exists) {
-                userScore = doc.data().score || 0;
-                scoreDisplay.textContent = userScore;
-            } else {
-                db.collection("users").doc(userId).set({ score: 0 });
-            }
-        });
-    }
-}
-
-// Sign in with Google (Only manually triggered, no visible button)
+// Sign-in with Google (Manually triggered)
 function signInWithGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithPopup(provider).then(result => {
@@ -79,6 +46,36 @@ function signInWithGoogle() {
         updateUI(user);  // Update UI after successful sign-in
         loadUserScore();  // Load the user's score from Firestore
     }).catch(error => console.error(error));
+}
+
+// Sign-out functionality
+signOutBtn.onclick = () => {
+    auth.signOut().then(() => {
+        userInfo.innerHTML = "";  // Clear user info after sign-out
+        userId = null;
+        userScore = 0;
+        scoreDisplay.textContent = userScore;
+        signInBtn.style.display = "block";  // Show sign-in button again
+        signOutBtn.style.display = "none";  // Hide sign-out button
+        leaderboardBtn.style.display = "none"; // Hide leaderboard button
+        clickerGame.style.display = "none"; // Hide game panel
+        toggleClickerBtn.style.display = "none"; // Hide toggle button
+    });
+};
+
+// Load user data after sign-in
+function loadUserScore() {
+    if (userId) {
+        db.collection("users").doc(userId).get().then(doc => {
+            if (doc.exists) {
+                userScore = doc.data().score || 0; // Set score from Firestore or default to 0
+                scoreDisplay.textContent = userScore;
+            } else {
+                // If the document doesn't exist, initialize it with 0 score
+                db.collection("users").doc(userId).set({ score: 0 });
+            }
+        });
+    }
 }
 
 // Update the user's score in Firestore
@@ -100,16 +97,13 @@ clickButton.onclick = () => {
 // Update UI after sign-in
 function updateUI(user) {
     if (user) {
-        userInfo.innerHTML = `
-            <img src="${user.photoURL}" width="50" style="border-radius:50%">
-            <p>Welcome, ${user.displayName}</p>
-        `;
-        // Show signed-in UI elements
-        clickerGame.style.display = "block";
-        leaderboardBtn.style.display = "block";
-        signOutBtn.style.display = "block";
-        toggleClickerBtn.style.display = "block";  // Show the toggle clicker button when logged in
-        signInBtn.style.display = "none";  // Hide the sign-in button once signed in
+        userInfo.innerHTML = `<img src="${user.photoURL}" width="50" style="border-radius:50%">
+        <p>Welcome, ${user.displayName}</p>`;
+        signInBtn.style.display = "none"; // Hide sign-in button after sign-in
+        signOutBtn.style.display = "block"; // Show sign-out button after sign-in
+        leaderboardBtn.style.display = "block"; // Show leaderboard button after sign-in
+        clickerGame.style.display = "block"; // Show game panel after sign-in
+        toggleClickerBtn.style.display = "block"; // Show toggle clicker button after sign-in
     }
 }
 
@@ -120,25 +114,25 @@ auth.onAuthStateChanged(user => {
         userId = user.uid;
         loadUserScore();
     } else {
-        // Hide the UI elements for logged-out users
-        userInfo.innerHTML = ''; // Clear the user info when logged out
-        clickerGame.style.display = "none";
-        leaderboardBtn.style.display = "none";
-        signOutBtn.style.display = "none";
-        toggleClickerBtn.style.display = "none"; // Hide the toggle clicker button when logged out
-        signInBtn.style.display = "block";  // Show the sign-in button again when logged out
+        // User is not signed in, keep the sign-in button visible
+        signInBtn.style.display = "block";
+        signOutBtn.style.display = "none"; // Hide sign-out button if not signed in
+        leaderboardBtn.style.display = "none"; // Hide leaderboard button if not signed in
+        clickerGame.style.display = "none"; // Hide game panel if not signed in
+        toggleClickerBtn.style.display = "none"; // Hide toggle button if not signed in
     }
 });
 
-// Initialize the UI immediately if the user is logged out
-if (!auth.currentUser) {
-    userInfo.innerHTML = '';  // Ensure no guest message
-    clickerGame.style.display = "none";
-    leaderboardBtn.style.display = "none";
-    signOutBtn.style.display = "none";
-    toggleClickerBtn.style.display = "none";  // Hide toggle clicker button when logged out
-    signInBtn.style.display = "block";  // Show the sign-in button when logged out
-}
+// Toggle Clicker Visibility
+toggleClickerBtn.onclick = () => {
+    if (clickerGame.style.display === "none") {
+        clickerGame.style.display = "block";
+        toggleClickerBtn.textContent = "Hide Clicker";
+    } else {
+        clickerGame.style.display = "none";
+        toggleClickerBtn.textContent = "Show Clicker";
+    }
+};
 
 
 
