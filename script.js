@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     // Firebase Configuration
-// Firebase Configuration
 const firebaseConfig = {
     apiKey: "AIzaSyAwUAqTV07AahyfD55owmyAcxDG3TP_KnI",
     authDomain: "lofi-168cb.firebaseapp.com",
@@ -24,43 +23,32 @@ const clickerGame = document.getElementById("clicker-game");
 const clickButton = document.getElementById("click-button");
 const scoreDisplay = document.getElementById("score");
 const leaderboardBtn = document.getElementById("leaderboard-btn");
-const toggleClickerBtn = document.getElementById("toggle-clicker-btn");
 
 let userScore = 0;
 let userId = null;
 
-// Hide sign-in button by default
+// Hide sign-in button completely
 signInBtn.style.display = "none";
 
 // Ensure UI Elements Are Always Visible (Development Mode)
-signOutBtn.style.display = "none"; // Initially hide the sign-out button
-leaderboardBtn.style.display = "none"; // Hide the leaderboard button by default
-clickerGame.style.display = "none"; // Hide the game section initially
-toggleClickerBtn.style.display = "none"; // Hide the toggle clicker button initially
+signOutBtn.style.display = "block";
+leaderboardBtn.style.display = "block";
+clickerGame.style.display = "block";
 
-// Sign-in with Google (Manually triggered)
-function signInWithGoogle() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider).then(result => {
-        const user = result.user;
-        userId = user.uid;
-        updateUI(user);  // Update UI after successful sign-in
-        loadUserScore();  // Load the user's score from Firestore
-    }).catch(error => console.error(error));
-}
+// Show Default Guest Info When Not Signed In
+userInfo.innerHTML = `<p>Welcome, Guest</p>
+                      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJg75LWB1zIJt1VTZO7O68yKciaDSkk3KMdw&s" width="50" style="border-radius:50%">`;
+scoreDisplay.textContent = 0;
 
-// Sign-out functionality
+// Sign out functionality
 signOutBtn.onclick = () => {
     auth.signOut().then(() => {
-        userInfo.innerHTML = "";  // Clear user info after sign-out
+        // Reset UI to guest mode
+        userInfo.innerHTML = `<p>Welcome, Guest</p>
+                              <img src="https://via.placeholder.com/50" width="50" style="border-radius:50%">`;
         userId = null;
         userScore = 0;
         scoreDisplay.textContent = userScore;
-        signInBtn.style.display = "block";  // Show sign-in button again
-        signOutBtn.style.display = "none";  // Hide sign-out button
-        leaderboardBtn.style.display = "none"; // Hide leaderboard button
-        clickerGame.style.display = "none"; // Hide game panel
-        toggleClickerBtn.style.display = "none"; // Hide toggle button
     });
 };
 
@@ -77,6 +65,17 @@ function loadUserScore() {
             }
         });
     }
+}
+
+// Sign in with Google (Only manually triggered, no visible button)
+function signInWithGoogle() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider).then(result => {
+        const user = result.user;
+        userId = user.uid;
+        updateUI(user);  // Update UI after successful sign-in
+        loadUserScore();  // Load the user's score from Firestore
+    }).catch(error => console.error(error));
 }
 
 // Update the user's score in Firestore
@@ -100,11 +99,6 @@ function updateUI(user) {
     if (user) {
         userInfo.innerHTML = `<img src="${user.photoURL}" width="50" style="border-radius:50%">
         <p>Welcome, ${user.displayName}</p>`;
-        signInBtn.style.display = "none"; // Hide sign-in button after sign-in
-        signOutBtn.style.display = "block"; // Show sign-out button after sign-in
-        leaderboardBtn.style.display = "block"; // Show leaderboard button after sign-in
-        clickerGame.style.display = "block"; // Show game panel after sign-in
-        toggleClickerBtn.style.display = "block"; // Show toggle clicker button after sign-in
     }
 }
 
@@ -115,26 +109,12 @@ auth.onAuthStateChanged(user => {
         userId = user.uid;
         loadUserScore();
     } else {
-        // User is not signed in, keep the sign-in button visible
-        signInBtn.style.display = "block";
-        signOutBtn.style.display = "none"; // Hide sign-out button if not signed in
-        leaderboardBtn.style.display = "none"; // Hide leaderboard button if not signed in
-        clickerGame.style.display = "none"; // Hide game panel if not signed in
-        toggleClickerBtn.style.display = "none"; // Hide toggle button if not signed in
+        // Keep UI visible but show guest mode
+        userInfo.innerHTML = `<p>Welcome, Guest</p>
+                              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJg75LWB1zIJt1VTZO7O68yKciaDSkk3KMdw&s" width="50" style="border-radius:50%">`;
+        scoreDisplay.textContent = 0; // Reset score display
     }
 });
-
-// Toggle Clicker Visibility
-toggleClickerBtn.onclick = () => {
-    if (clickerGame.style.display === "none") {
-        clickerGame.style.display = "block";
-        toggleClickerBtn.textContent = "Hide Clicker";
-    } else {
-        clickerGame.style.display = "none";
-        toggleClickerBtn.textContent = "Show Clicker";
-    }
-};
-
 
 
     
