@@ -967,10 +967,12 @@ main {
     margin-top: 13%;
 }
 
+/* Profile Container - Center the contents */
 .profileContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center; /* This centers the content horizontally */
     background: white;
     padding: 1rem;
     border-radius: 20px;
@@ -983,13 +985,7 @@ main {
     transition: transform 0.3s ease-in-out, backdrop-filter 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.userInfoContainer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-}
-
+/* Ensure the button is centered horizontally */
 #sign-in-btn {
     padding: 12px 24px;
     font-size: 16px;
@@ -1001,18 +997,25 @@ main {
     cursor: pointer;
     border-radius: 5px;
     transition: background-color 0.3s, box-shadow 0.3s;
+    max-width: 350px; /* Limit the max width to avoid stretching too much */
+    width: 100%; /* Ensure button is full width within its container */
+    margin: 0 auto; /* This is what centers the button horizontally */
 }
 
+/* Align the Sign In Button Text and Image */
 #sign-in-btn img {
     width: 20px;
     margin-right: 10px;
 }
 
+/* Sign In Button Hover Effect */
 #sign-in-btn:hover {
     background-color: #f4f4f4;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+
+/* Sign Out Button */
 #sign-out-btn {
     display: none;
     padding: 12px 24px;
@@ -1024,11 +1027,13 @@ main {
     transition: background-color 0.3s, box-shadow 0.3s;
 }
 
+/* Sign Out Button Hover Effect */
 #sign-out-btn:hover {
     background-color: #d93025;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Toggle Clicker Button */
 #toggle-clicker-btn {
     padding: 12px 24px;
     font-size: 16px;
@@ -1046,7 +1051,6 @@ main {
     background-color: #f4f4f4;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
-
 
 /* Flex container for the Click Me button and the Clicks text */
 .clicker-container {
@@ -1069,7 +1073,7 @@ main {
 }
 
 .button-container button {
-    flex: 1;  /* Makes each button take up 50% width */
+    flex: 1;
     padding: 12px 24px;
     font-size: 16px;
     background-color: #4CAF50;
@@ -1078,11 +1082,11 @@ main {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s, box-shadow 0.3s;
-    margin-right: 5px;  /* Adds some space between the buttons */
+    margin-right: 5px;
 }
 
 .button-container button:last-child {
-    margin-right: 0;  /* Removes the margin from the last button */
+    margin-right: 0;
 }
 
 .button-container button:hover {
@@ -1120,6 +1124,7 @@ main {
     margin-left: auto; /* Pushes the button to the right */
 }
 
+/* Click Me Button */
 #click-button {
     padding: 10px 20px;
     font-size: 18px;
@@ -1149,6 +1154,7 @@ main {
     width: 20px;
     margin-right: 10px; /* Spacing between icon and text */
 }
+
 
 
 /* --------START OF MEDIA QUERIES-------------- */
