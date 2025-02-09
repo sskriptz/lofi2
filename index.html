@@ -12,10 +12,30 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
     <script>
+        window.onload = function() {
+            document.body.style.opacity = "1"; // Hide body initially
+        };
 
-        window.addEventListener("load", () => {
-            document.body.style.opacity = "1";
-        });
+
+        function revealContent() {
+            const overlay = document.getElementById("click-overlay");
+            const mainContent = document.getElementById("main-content");
+
+            overlay.style.opacity = "0";
+            overlay.style.pointerEvents = "none";
+            setTimeout(() => {
+                overlay.style.display = "none";
+                mainContent.style.display = "flex";
+                setTimeout(() => {
+                    mainContent.style.opacity = "1";
+                    mainContent.style.pointerEvents = "auto";
+                }, 50);
+            }, 500);
+
+            // Play background music when the button is clicked
+            const music = document.getElementById("background-music");
+            music.play();
+        }
 
         // Firebase Configuration
         const firebaseConfig = {
@@ -64,8 +84,7 @@
 
             function updateUI(user) {
                 if (user) {
-                    userInfo.innerHTML = `<img src="${user.photoURL}" width="50" style="border-radius:50%">
-                                          <p>Welcome, ${user.displayName}</p>`;
+                    userInfo.innerHTML = `<img src="${user.photoURL}" width="50" style="border-radius:50%"><p>Welcome, ${user.displayName}</p>`;
                     signInBtn.style.display = "none";
                     signOutBtn.style.display = "block";
                 }
@@ -111,13 +130,56 @@
             margin: 0;
             overflow: hidden;
             cursor: url('https://i.ibb.co/60tk0khC/image-removebg-preview-1-1-optimized.png'), auto;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
+            opacity: 0; /* Set opacity to 1 immediately */
+            transition: opacity 0.5s ease-in-out;
         }
 
         html {
             height: 100%;
             margin: 0;
+        }
+
+        #click-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: opacity 0.5s ease;
+            opacity: 1;
+            pointer-events: auto; /* Allow clicks on the overlay */
+        }
+
+        #click-to-enter {
+            font-size: 24px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            transition: transform 0.5s ease;
+        }
+
+        #click-to-enter:hover {
+            transform: scale(1.1);
+        }
+
+        #main-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none; /* Disable interactions on the content behind the overlay */
         }
 
         .cards-container {
@@ -126,7 +188,7 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            width: 100%;
+            width: 50vw;
             padding: 20px;
             box-sizing: border-box;
         }
@@ -150,7 +212,20 @@
 
         .card:hover {
             transform: scale(1.02);
-            transition: transform 0.5s ease;
+        }
+
+        .music {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        #music-url {
+            color: #ffcc00;
+            text-decoration: none;
+        }
+
+        #music-url:hover {
+            text-decoration: underline;
         }
 
         #sign-in-btn {
@@ -186,29 +261,88 @@
         .subtitle {
             font-size: 18px;
         }
+
+        #mute-btn {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 50%;
+        }
+
+        #mute-icon {
+            transition: transform 0.3s ease;
+            width: 25px;
+            height: 25px;
+        }
+
+        #mute-btn:hover #mute-icon {
+            transform: scale(1.1);
+        }
+
     </style>
 </head>
 <body>
+
     <div id="user-info"></div>
     <button id="sign-out-btn" style="display:none;">Sign Out</button>
 
-    <div class="cards-container">
-        <div class="card">
-            <div class="header">
-                <h1 class="title">Welcome to TCZ</h1>
-                <p class="subtitle">Please sign in with Google to continue</p>
+    <div id="click-overlay" onclick="revealContent()">
+        <p id="click-to-enter">Click to Enter</p>
+    </div>
+
+
+    <div id="main-content">
+
+         <!-- Mute/Unmute Button -->
+        <div id="mute-btn" onclick="toggleMute()" style="position: fixed; top: 10px; left: 10px; cursor: pointer; z-index: 1000;">
+            <img id="mute-icon" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS49Jn2LHracg8eQTJn6MWx9V39QfA9rqmZwg&s" alt="Mute" width="30">
+        </div>
+
+        <div class="cards-container">
+            <div class="card">
+                <div class="header">
+                    <h1 class="title">Welcome to The Chill Zone</h1>
+                    <p class="subtitle">Please sign in with Google to continue</p>
+                </div>
+
+                <button id="sign-in-btn">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/2048px-Google_%22G%22_logo.svg.png" alt="Google Logo">
+                    Sign in with Google
+                </button>
+
+                <div class="music">
+                    <p>♫ Music: Kainbeats - <a href="https://www.youtube.com/watch?v=iuT8KImN-Rk" target="_blank" id="music-url">Mindscapes</a> ♫</p>
+                </div>
             </div>
 
-            <button id="sign-in-btn">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/2048px-Google_%22G%22_logo.svg.png" alt="Google Logo">
-                Sign in with Google
-            </button>
-        </div>
-
-        <div class="card2">
-            <p>© 2025 TCZ. All rights reserved.</p>
+            <div class="card2">
+                <p>© 2025 TCZ. All rights reserved.</p>
+            </div>
         </div>
     </div>
+
+    <audio id="background-music" loop>
+        <source src="https://www.dropbox.com/scl/fi/lyej7xmh0yg0hjjvak41d/Kainbeats-mindscapes-Sad-Lofi-Hiphop-EP-TubeRipper.com.mp3?rlkey=nx9sjr4hdkxjsbauo0lbziztl&st=pj5y7808&raw=1
+        " type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        // Mute/Unmute Functionality
+        let isMuted = false;  // Track mute state
+        const audio = document.getElementById("background-music");
+        const muteIcon = document.getElementById("mute-icon");
+
+        function toggleMute() {
+            if (isMuted) {
+                audio.muted = false;
+                muteIcon.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS49Jn2LHracg8eQTJn6MWx9V39QfA9rqmZwg&s"; // Speaker icon
+            } else {
+                audio.muted = true;
+                muteIcon.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvGg-OEdSSVszjubJiw_hqkAW7phznLr0XFA&s"; // Muted speaker icon
+            }
+            isMuted = !isMuted;
+        }
+    </script>
 
 </body>
 </html>
