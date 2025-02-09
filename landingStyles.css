@@ -6,12 +6,19 @@
 }
 
 html {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
     overflow: hidden;
     height: 100vh;
     box-sizing: border-box;
 }
 
 body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-image: url("https://wallpapers.com/images/featured/lo-fi-mvqzjym6ie17firw.jpg");
     background-size: cover;
     background-repeat: no-repeat;
@@ -42,8 +49,8 @@ main {
     scale: 0.85;
     flex-wrap: wrap;
     height: auto;
-    margin-left: auto;
-    margin-right: auto;
+    width: 90vw;
+    margin: 0px;
 }
 
 .main-items {
