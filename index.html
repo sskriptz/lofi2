@@ -16,7 +16,6 @@
             document.body.style.opacity = "1"; // Hide body initially
         };
 
-
         function revealContent() {
             const overlay = document.getElementById("click-overlay");
             const mainContent = document.getElementById("main-content");
@@ -278,6 +277,47 @@
             transform: scale(1.1);
         }
 
+        #footer {
+            display: flex;
+            position: fixed;
+            bottom: 20px;
+            font-size: 14px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            text-align: center;
+        }
+
+        #social-buttons {
+            margin-left: 15px;
+            margin-top: 8px;
+        }
+
+        #social-buttons a {
+            display: inline-block;
+        }
+
+        #social-buttons img {
+            width: 30px;
+            height: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        #social-buttons img:hover {
+            transform: scale(1.1);
+        }
+
+
+        #trademark {
+            font-size: 15px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            transition: transform 0.5s ease;
+        }
+
+        #trademark:hover {
+            transform: scale(1.1);
+        }
+
     </style>
 </head>
 <body>
@@ -288,7 +328,6 @@
     <div id="click-overlay" onclick="revealContent()">
         <p id="click-to-enter">Click to Enter</p>
     </div>
-
 
     <div id="main-content">
 
@@ -315,14 +354,27 @@
             </div>
 
             <div class="card2">
-                <p>© 2025 TCZ. All rights reserved.</p>
+                <p id="trademark">© 2025 TCZ. All rights reserved.</p>
             </div>
         </div>
+
+        <!-- Footer -->
+        <div id="footer">
+            <p>Developed by Kroot Loops</p>
+            <div id="social-buttons">
+                <a href="https://github.com/sskriptz" target="_blank">
+                    <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" width="30" />
+                </a>
+                <a href="https://discord.com/users/1091883411674763385" target="_blank">
+                    <img src="https://brandlogos.net/wp-content/uploads/2021/11/discord-logo-512x512.png" alt="Discord" width="30" />
+                </a>
+            </div>
+        </div>
+
     </div>
 
     <audio id="background-music" loop>
-        <source src="https://www.dropbox.com/scl/fi/lyej7xmh0yg0hjjvak41d/Kainbeats-mindscapes-Sad-Lofi-Hiphop-EP-TubeRipper.com.mp3?rlkey=nx9sjr4hdkxjsbauo0lbziztl&st=pj5y7808&raw=1
-        " type="audio/mp3">
+        <source src="https://www.dropbox.com/scl/fi/lyej7xmh0yg0hjjvak41d/Kainbeats-mindscapes-Sad-Lofi-Hiphop-EP-TubeRipper.com.mp3?rlkey=nx9sjr4hdkxjsbauo0lbziztl&st=pj5y7808&raw=1" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
 
