@@ -112,13 +112,13 @@ main {
     background: linear-gradient(90deg, #7341a9, #00ffa6);
     background-size: 200% 100%;
     animation: gradientAnimation 6s infinite ease-in-out;
-    transition: transform 0.8s ease-in-out, backdrop-filter 0.8s ease-in-out, box-shadow 0.8s ease-in-out, filter 0.8s ease-in-out;
+    transition: transform 0.5s ease-in-out, backdrop-filter 0.5s ease-in-out, box-shadow 0.5s ease-in-out, filter 0.5s ease-in-out;
 }
 
 .more-icon:hover, .settings-icon:hover {
     transform: scale(1.04);
     backdrop-filter: blur(2px);
-    box-shadow: 8px 12px #434343;
+    box-shadow: 4px 6px black;
     filter: hue-rotate(45deg); /* Smooth color shift */
 }
 
@@ -141,12 +141,12 @@ main {
     background: linear-gradient(90deg, #7341a9, #00ffa6);
     background-size: 200% 100%;
     animation: gradientAnimation 6s infinite ease-in-out;
-    transition: transform 0.8s ease-in-out, backdrop-filter 0.8s ease-in-out, box-shadow 0.8s ease-in-out, filter 0.8s ease-in-out;
+    transition: transform 0.5s ease-in-out, backdrop-filter 0.5s ease-in-out, box-shadow 0.5s ease-in-out, filter 0.5s ease-in-out;
 }
 
-/* Hover Effect */
+
 .timeContainer1:hover {
-    transform: scale(1.01);
+    transform: scale(1.015);
     backdrop-filter: blur(2px);
     /* box-shadow: 8px 12px #434343; */
     filter: hue-rotate(45deg); /* Smooth color shift */
@@ -191,12 +191,11 @@ main {
 
 .particleContainer {
     display: flex;
-    width: auto;
+    width: 50%;
     padding-left: 0;
     padding-right: 0;
     padding-top: 10px;
     padding-bottom: 10px;
-    flex-grow: 1;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -220,7 +219,8 @@ main {
     font-size: calc(1vw + 0.8vh);
     font-family: "IBM Plex Mono", serif;
     font-weight: 600;
-    margin-top: 0;
+    margin-top: 10px;
+    margin-bottom: 5px;
 }
 
 #particlesButtonRain {
@@ -346,10 +346,9 @@ main {
 
 .weatherContainer {
     display: flex;
-    width: auto;
+    width: 50%;
     padding-left: 0;
     padding-right: 0;
-    flex-grow: 1;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -373,7 +372,8 @@ main {
     font-size: calc(1vw + 0.8vh);
     font-family: "IBM Plex Mono", serif;
     font-weight: 600;
-    margin-top: 0;
+    margin-top: 10px;
+    margin-bottom: 5px;
 }
 
 .weatherDescriptionTitles {
@@ -595,8 +595,6 @@ main {
 
 
 /* To Do List */
-
-
 
 
 .tdContainer {
