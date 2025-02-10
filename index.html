@@ -13,7 +13,7 @@
 
     <script>
         window.onload = function() {
-            document.body.style.opacity = "1"; // Hide body initially
+            document.body.style.opacity = "1";
         };
 
         function revealContent() {
@@ -33,7 +33,7 @@
 
             // Play background music when the button is clicked
             const music = document.getElementById("background-music");
-            music.play();
+            music.play().catch(() => console.log("Autoplay blocked, waiting for user interaction."));
         }
 
         // Firebase Configuration
@@ -63,23 +63,52 @@
             signOutBtn.style.display = "none";
 
             function signInWithGoogle() {
+                // Show loading screen
+                document.getElementById("loading-overlay").style.display = "flex";
+                signInBtn.disabled = true; // Prevent multiple clicks
                 const provider = new firebase.auth.GoogleAuthProvider();
-                auth.signInWithPopup(provider).then(result => {
-                    const user = result.user;
-                    userId = user.uid;
-                    updateUI(user);
-                    window.location.href = "landing.html";
-                }).catch(error => {
-                    alert("Sign-in failed! Please try again.");
-                });
+                
+                auth.signInWithPopup(provider)
+                    .then(result => {
+                        // Hide loading screen once login is successful
+                        document.getElementById("loading-overlay").style.display = "none";
+                        window.location.href = "landing.html"; // Redirect after successful sign-in
+                    })
+                    .catch(error => {
+                        // Hide loading screen if login fails
+                        document.getElementById("loading-overlay").style.display = "none";
+                        signInBtn.disabled = false; // Re-enable button after failure
+
+                        // Log the error to console for debugging purposes
+                        console.error("Error during sign-in:", error);
+
+                        // Display error message to the user
+                        let errorMessage = "An error occurred during sign-in. Please try again.";
+
+                        if (error.code === 'auth/popup-closed-by-user') {
+                            errorMessage = "The sign-in popup was closed. Please try again.";
+                        } else if (error.code === 'auth/cancelled-popup-request') {
+                            errorMessage = "Sign-in request was cancelled. Please try again.";
+                        } else if (error.code === 'auth/network-request-failed') {
+                            errorMessage = "Network error. Please check your connection and try again.";
+                        } else if (error.code === 'auth/account-exists-with-different-credential') {
+                            errorMessage = "An account already exists with a different credential. Please use a different sign-in method.";
+                        }
+
+                        alert(errorMessage);
+                    });
             }
+
+
+
 
             signOutBtn.onclick = () => {
                 auth.signOut().then(() => {
                     resetUI();
-                    window.location.href = "index.html";
+                    location.reload();
                 });
             };
+
 
             function updateUI(user) {
                 if (user) {
@@ -129,7 +158,7 @@
             margin: 0;
             overflow: hidden;
             cursor: url('https://i.ibb.co/60tk0khC/image-removebg-preview-1-1-optimized.png'), auto;
-            opacity: 0; /* Set opacity to 1 immediately */
+            opacity: 0;
             transition: opacity 0.5s ease-in-out;
         }
 
@@ -155,7 +184,7 @@
             cursor: pointer;
             transition: opacity 0.5s ease;
             opacity: 1;
-            pointer-events: auto; /* Allow clicks on the overlay */
+            pointer-events: auto;
         }
 
         #click-to-enter {
@@ -178,7 +207,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            pointer-events: none; /* Disable interactions on the content behind the overlay */
+            pointer-events: none;
         }
 
         .cards-container {
@@ -190,6 +219,21 @@
             width: 50vw;
             padding: 20px;
             box-sizing: border-box;
+        }
+
+        @keyframes cardsHoverEffect {
+            0% {
+                transform: translateY(0);
+                box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            }
+            50% {
+                transform: translateY(-7px);
+                box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.2);
+            }
+            100% {
+                transform: translateY(0);
+                box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            }
         }
 
         .card {
@@ -206,11 +250,8 @@
             width: 100%;
             margin: 0 auto;
             text-align: center;
-            transition: transform 0.5s ease;
-        }
-
-        .card:hover {
-            transform: scale(1.02);
+            animation: cardsHoverEffect 2s infinite ease-in-out;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .card2 {
@@ -227,11 +268,8 @@
             width: 100%;
             margin-top: 20px;
             text-align: center;
-            transition: transform 0.5s ease;
-        }
-
-        .card2:hover {
-            transform: scale(1.02);
+            animation: cardsHoverEffect 2s infinite ease-in-out;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .trademark-links {
@@ -239,7 +277,7 @@
             flex-direction: row;
             align-items: center;
             justify-content: center;
-            gap: 13px;
+            gap: 20px;
         }
 
         .trademark {
@@ -348,6 +386,37 @@
             transform: scale(1.1);
         }
 
+        /* Loading Screen */
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            font-size: 24px;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
     </style>
 </head>
 <body>
@@ -358,6 +427,12 @@
     <div id="click-overlay" onclick="revealContent()">
         <p id="click-to-enter">Click to Enter</p>
     </div>
+
+    <div id="loading-overlay" style="display:none;">
+        <div class="loading-spinner"></div>
+        <p>Loading...</p>
+    </div>
+    
 
     <div id="main-content">
 
@@ -386,10 +461,11 @@
             <div class="card2">
                 <p id="trademark">© 2025 TCZ. All rights reserved.</p>
                 <div class="trademark-links">
-                    <a href="" target="_blank" class="trademark" id="tos">Terms of Service</a>
-                    <a href="" target="_blank" class="trademark" id="pp">Privacy Policy</a>
+                    <!-- <a href="" target="_blank" class="trademark" id="tos">Terms of Service</a> -->
+                    <!-- <a href="" target="_blank" class="trademark" id="pp">Privacy Policy</a> -->
                     <a href="" target="_blank" class="trademark" id="cu">Contact Us</a>
                     <a href="" target="_blank" class="trademark" id="au">About Us</a>
+                    <a href="" target="_blank" class="trademark" id="au">What is it?</a>
                 </div>
             </div>
         </div>
@@ -426,8 +502,8 @@
             backButton.id = "back-btn";
             backButton.style.display = "none";
             backButton.style.padding = "12px 24px";
-            backButton.style.fontSize = "16px";
-            backButton.style.background = "white";
+            backButton.style.fontSize = "20px";
+            backButton.style.background = "rgba(0,0,0,0.4)";
             backButton.style.border = "1px solid #ddd";
             backButton.style.cursor = "pointer";
             backButton.style.borderRadius = "5px";
@@ -436,17 +512,20 @@
             backButton.style.left = "50%";
             backButton.style.transform = "translate(-50%, -50%)";
             backButton.style.transition = "opacity 0.5s ease-in-out";
+            backButton.style.color = "white";
+            backButton.style.transition = "transform 0.2s ease-in-out";
+
+
 
             document.body.appendChild(backButton);
 
-            // Ensure smooth fade transitions
             cardsContainer.style.transition = "opacity 0.5s ease-in-out";
             backButton.style.transition = "opacity 0.5s ease-in-out";
 
             // Hide the cards container and show the back button with fade effect
             trademarkLinks.forEach(link => {
                 link.addEventListener("click", (e) => {
-                    e.preventDefault(); // Prevent default action
+                    e.preventDefault();
                     cardsContainer.style.opacity = "0";
 
                     setTimeout(() => {
@@ -479,16 +558,17 @@
             const muteIcon = document.getElementById("mute-icon");
 
             function toggleMute() {
-                if (isMuted) {
+                if (audio.muted) {
                     audio.muted = false;
                     muteIcon.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS49Jn2LHracg8eQTJn6MWx9V39QfA9rqmZwg&s"; // Speaker icon
                 } else {
                     audio.muted = true;
-                    muteIcon.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvGg-OEdSSVszjubJiw_hqkAW7phznLr0XFA&s"; // Muted speaker icon
+                    muteIcon.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZRDX3zAQwjjZ93FfBxSzOmekm9eEno9Do7g&s"; // Mute icon
                 }
-                isMuted = !isMuted;
             }
 
+            const muteButton = document.getElementById("mute-btn");
+            muteButton.addEventListener("click", toggleMute);
 
         });
 
