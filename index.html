@@ -213,6 +213,48 @@
             transform: scale(1.02);
         }
 
+        .card2 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 5px 20px 20px 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            max-width: 40vw;
+            height: 10vh;
+            width: 100%;
+            margin-top: 20px;
+            text-align: center;
+            transition: transform 0.5s ease;
+        }
+
+        .card2:hover {
+            transform: scale(1.02);
+        }
+
+        .trademark-links {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 13px;
+        }
+
+        .trademark {
+            font-size: 12px;
+            color: #ffcc00;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            transition: transform 0.5s ease;
+            text-decoration: none;
+        }
+
+        .trademark:hover {
+            transform: scale(1.1);
+            text-decoration: underline;
+        }
+
         .music {
             margin-top: 20px;
             font-size: 14px;
@@ -306,18 +348,6 @@
             transform: scale(1.1);
         }
 
-
-        #trademark {
-            font-size: 15px;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-            transition: transform 0.5s ease;
-        }
-
-        #trademark:hover {
-            transform: scale(1.1);
-        }
-
     </style>
 </head>
 <body>
@@ -355,6 +385,12 @@
 
             <div class="card2">
                 <p id="trademark">© 2025 TCZ. All rights reserved.</p>
+                <div class="trademark-links">
+                    <a href="" target="_blank" class="trademark" id="tos">Terms of Service</a>
+                    <a href="" target="_blank" class="trademark" id="pp">Privacy Policy</a>
+                    <a href="" target="_blank" class="trademark" id="cu">Contact Us</a>
+                    <a href="" target="_blank" class="trademark" id="au">About Us</a>
+                </div>
             </div>
         </div>
 
@@ -379,21 +415,83 @@
     </audio>
 
     <script>
-        // Mute/Unmute Functionality
-        let isMuted = false;  // Track mute state
-        const audio = document.getElementById("background-music");
-        const muteIcon = document.getElementById("mute-icon");
 
-        function toggleMute() {
-            if (isMuted) {
-                audio.muted = false;
-                muteIcon.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS49Jn2LHracg8eQTJn6MWx9V39QfA9rqmZwg&s"; // Speaker icon
-            } else {
-                audio.muted = true;
-                muteIcon.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvGg-OEdSSVszjubJiw_hqkAW7phznLr0XFA&s"; // Muted speaker icon
+    document.addEventListener("DOMContentLoaded", () => {
+            const cardsContainer = document.querySelector(".cards-container");
+            const trademarkLinks = document.querySelectorAll(".trademark");
+            const backButton = document.createElement("button");
+
+            // Style the Back button
+            backButton.innerText = "Back";
+            backButton.id = "back-btn";
+            backButton.style.display = "none";
+            backButton.style.padding = "12px 24px";
+            backButton.style.fontSize = "16px";
+            backButton.style.background = "white";
+            backButton.style.border = "1px solid #ddd";
+            backButton.style.cursor = "pointer";
+            backButton.style.borderRadius = "5px";
+            backButton.style.position = "absolute";
+            backButton.style.top = "50%";
+            backButton.style.left = "50%";
+            backButton.style.transform = "translate(-50%, -50%)";
+            backButton.style.transition = "opacity 0.5s ease-in-out";
+
+            document.body.appendChild(backButton);
+
+            // Ensure smooth fade transitions
+            cardsContainer.style.transition = "opacity 0.5s ease-in-out";
+            backButton.style.transition = "opacity 0.5s ease-in-out";
+
+            // Hide the cards container and show the back button with fade effect
+            trademarkLinks.forEach(link => {
+                link.addEventListener("click", (e) => {
+                    e.preventDefault(); // Prevent default action
+                    cardsContainer.style.opacity = "0";
+
+                    setTimeout(() => {
+                        cardsContainer.style.display = "none";
+                        backButton.style.display = "block";
+                        setTimeout(() => {
+                            backButton.style.opacity = "1";
+                        }, 50);
+                    }, 500);
+                });
+            });
+
+            // Show the cards container when Back button is clicked
+            backButton.addEventListener("click", () => {
+                backButton.style.opacity = "0";
+
+                setTimeout(() => {
+                    backButton.style.display = "none";
+                    cardsContainer.style.display = "flex";
+                    setTimeout(() => {
+                        cardsContainer.style.opacity = "1";
+                    }, 50);
+                }, 500);
+            });
+
+
+            // Mute/Unmute Functionality
+            let isMuted = false;  // Track mute state
+            const audio = document.getElementById("background-music");
+            const muteIcon = document.getElementById("mute-icon");
+
+            function toggleMute() {
+                if (isMuted) {
+                    audio.muted = false;
+                    muteIcon.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS49Jn2LHracg8eQTJn6MWx9V39QfA9rqmZwg&s"; // Speaker icon
+                } else {
+                    audio.muted = true;
+                    muteIcon.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvGg-OEdSSVszjubJiw_hqkAW7phznLr0XFA&s"; // Muted speaker icon
+                }
+                isMuted = !isMuted;
             }
-            isMuted = !isMuted;
-        }
+
+
+        });
+
     </script>
 
 </body>
