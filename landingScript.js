@@ -996,15 +996,36 @@ document.addEventListener("DOMContentLoaded", () => {
     
     
         // ----------------- END OF SETTINGS BUTTON JS -----------------
+
+
     
     
         // ------------------- START OF PROFILE ICON JS -----------------
     
-        // Load the profile picture from localStorage when the page loads
     
     
     
         // -------------------- END OF PROFILE ICON JS -------------------
+
+
+
+        // ------------------- START OF PROFILE EDIT JS ------------------
+
+        let profileEditIcon = document.getElementById("profileEdit-icon");
+        let pcp = document.getElementById("profileCustomizationPanel");
+        let main = document.getElementById("main");
+
+        profileEditIcon.addEventListener('click', () => {
+            main.style.display = "none";
+
+            pcp.style.display = "flex";
+            pcp.style.flexDirection = "column";
+            pcp.style.alignItems = "center";
+        });
+
+
+        // ------------------- END OF PROFILE EDIT JS ------------------
+
     
     
         // --------------- START OF CLOCK JS ---------------------
