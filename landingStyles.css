@@ -45,7 +45,10 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* background-color: blue; */
+    /* background-color: rgba(0, 0, 0, 0.5);
+    border: 3px solid black;
+    border-radius: 15px;
+    padding: 3% 5% 3% 5%; */
     scale: 0.85;
     flex-wrap: wrap;
     height: auto;
@@ -256,10 +259,10 @@ main {
 #rainGif {
     visibility: hidden;
     position: fixed;
-    top: 0;
+    top: -5%;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 110vw;
+    height: 110vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1070,6 +1073,10 @@ main {
     backdrop-filter: blur(6px);
 }
 
+.profileEdit-icon {
+    margin-left: 10%;
+}
+
 .profileEdit-icon:hover {
     cursor: pointer;
 }
@@ -1178,6 +1185,38 @@ main {
 #sign-in-btn:hover {
     background-color: #f4f4f4;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+#profileCustomizationPanel {
+    display: none;
+    /* background-color: rgba(0, 0, 0, 0.6); */
+    padding: 20px;
+    border-radius: 15px;
+    height: 85%;
+    width: 80%;
+    position: fixed;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+#profileCustomizationPanelHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    /* background-color: red; */
+}
+
+#pcTitle {
+    font-size: 27px;
+    font-weight: bold;
+    color: white;
+}
+
+#pcHr {
+    width: 100%;
+    height: 2px;
+    background-color: white;
 }
 
 
