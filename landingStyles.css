@@ -31,7 +31,7 @@ body {
     font-family: "Inconsolata", monospace;
     opacity: 0;
     overflow: visible;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(7px);
     margin: 0;
     box-sizing: border-box;
 }
@@ -1193,10 +1193,17 @@ main {
     /* background-color: rgba(0, 0, 0, 0.6); */
     padding: 20px;
     border-radius: 15px;
-    height: 85%;
-    width: 80%;
+    height: 70%;
+    width: 65%;
     position: fixed;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    backdrop-filter:  blur(10px);
+    background-color: rgba(0, 0, 0, 0.7);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 1);
+}
+
+#profileCustomizationPanel:hover {
+    transform: scale(1.01);
 }
 
 #profileCustomizationPanelHeader {
@@ -1219,6 +1226,41 @@ main {
     background-color: white;
 }
 
+.pcp-option-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+#pcpOption1 {
+    background-color: blue;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+#pcpBackButton {
+    display: none;
+    position: fixed;
+    top: 2%;
+    left: 1%;
+    padding: 10px 20px 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+    color: lightgray;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+#pcpBackButton:hover {
+    transform: scale(1.03);
+}
 
 /* --------START OF MEDIA QUERIES-------------- */
 
