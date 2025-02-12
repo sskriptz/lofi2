@@ -27,8 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const signOutBtn = document.getElementById("sign-out-btn");
     const userInfo = document.getElementById("user-info");
 
-    let userId = null;
-
     // Create the welcome panel element and style it dynamically (Frosted glass effect)
     const welcomePanel = document.createElement("div");
     welcomePanel.id = "welcome-panel";
@@ -1014,6 +1012,19 @@ document.addEventListener("DOMContentLoaded", () => {
         let profileEditIcon = document.getElementById("profileEdit-icon");
         let pcp = document.getElementById("profileCustomizationPanel");
         let main = document.getElementById("main");
+        let pcpBackButton = document.getElementById("pcpBackButton");
+
+        // Ensure back button event is added only once
+        pcpBackButton.addEventListener('click', () => {
+            pcp.style.opacity = "0"; // Start fading out
+            pcpBackButton.style.opacity = "0"; // Start fading out 
+
+            setTimeout(() => {
+                pcp.style.display = "none";
+                pcpBackButton.style.display = "none";
+                main.style.display = "flex";
+            }, 300); // Wait for transition
+        });
 
         profileEditIcon.addEventListener('click', () => {
             main.style.display = "none";
@@ -1021,7 +1032,17 @@ document.addEventListener("DOMContentLoaded", () => {
             pcp.style.display = "flex";
             pcp.style.flexDirection = "column";
             pcp.style.alignItems = "center";
+            pcp.style.opacity = "0"; // Start invisible
+
+            pcpBackButton.style.display = "flex";
+
+            setTimeout(() => {
+                pcp.style.opacity = "1"; // Fade in
+                pcpBackButton.style.opacity = "1"; // Fade in
+            }, 10);
         });
+
+
 
 
         // ------------------- END OF PROFILE EDIT JS ------------------
