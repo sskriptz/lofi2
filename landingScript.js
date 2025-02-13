@@ -1048,6 +1048,34 @@ document.addEventListener("DOMContentLoaded", () => {
         // ------------------- END OF PROFILE EDIT JS ------------------
 
     
+        // --------------------- START OF SIDE-PANEL JS ---------------------
+
+        let openBtn = document.getElementById("hm-icon");
+        let sideBar = document.getElementById("mySidebar");
+        let closeBtn = document.getElementById("closeBtn");
+        let sidePanelOverlay = document.getElementById("sidePanelOverlay");
+
+        openBtn.addEventListener('click', () => {
+            sideBar.style.width = "230px";
+            // sidePanelOverlay.style.display = "block";
+        });
+
+        closeBtn.addEventListener('click', () => {
+            sideBar.style.width = "0px";
+        });
+
+        // function openNav() {
+        //     document.getElementById("mySidebar").style.width = "250px";
+        // }
+          
+        // function closeNav() {
+        //     document.getElementById("mySidebar").style.width = "0";
+        //     document.getElementById("main").style.marginLeft= "0";
+        // }
+
+        // ----------------------- END OF SIDE PANEL JS -------------------------
+
+
     
         // --------------- START OF CLOCK JS ---------------------
     
