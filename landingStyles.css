@@ -1262,6 +1262,82 @@ main {
     transform: scale(1.03);
 }
 
+#hm-icon {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top: 15px;
+    left: 15px;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+#hm-icon:hover {
+    transform: scale(1.05);
+}
+
+
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    color: #f1f1f1;
+}
+
+.sidebar .closeBtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+#sidePanelHr1, #sidePanelHr2 {
+    width: 80%;
+}
+
+#sign-out-sp-btn {
+    color: red;
+    transition: 0.3.
+}
+
+#sign-out-sp-btn:hover {
+    color: #b00808;
+}
+
+#sidePanelOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 5000;
+}
+
 /* --------START OF MEDIA QUERIES-------------- */
 
 
