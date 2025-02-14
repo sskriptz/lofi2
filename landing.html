@@ -76,7 +76,7 @@
                 <form id="pp-aboutme-form">
                     <fieldset>
                         <legend>About Me</legend>
-                        <p>placeholder</p>
+                        <p id="aboutme-official-p"></p>
                     </fieldset>
                 </form>
 
@@ -114,11 +114,23 @@
             <div class="pcp-option-panel">
                 <form id="pp-customization-pane1">
                     <fieldset>
-                        <label for="fname">Username:</label>
-                        <input type="text" id="fname" name="fname" size="50">
-                        <button id="xxx" type="button">Save</button>
+                        <p>Change Username:</p>
+                        <div class="username-change-items">
+                            <input type="text" id="username-input" maxlength="24">
+                            <button id="username-save-btn" type="button">Save</button>
+                        </div>
                     </fieldset>
                 </form>
+
+                <form id="pp-customization-pane2">
+                    <fieldset>
+                        <p>Change About Me:</p>
+                        <div class="change-aboutme-items">
+                            <textarea id="aboutme-input" maxlength="300" rows="4"></textarea>
+                            <button id="aboutme-save-btn" type="button">Save</button>
+                        </div>
+                    </fieldset>
+                </form> 
             </div>
         </div>
 
