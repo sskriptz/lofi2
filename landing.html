@@ -84,7 +84,7 @@
                     <form id="pp-socials-form">
                         <fieldset>
                             <legend>Socials</legend>
-                            <p>placeholder</p>
+                            <p id="socials-official-p"></p>
                         </fieldset>
                     </form>
 
@@ -131,6 +131,16 @@
                         </div>
                     </fieldset>
                 </form> 
+
+                <form id="pp-customization-pane3">
+                    <fieldset>
+                        <p>Change Socials:</p>
+                        <div class="change-socials-items">
+                            <textarea id="socials-input" maxlength="300" rows="4"></textarea>
+                            <button id="socials-save-btn" type="button">Save</button>
+                        </div>
+                    </fieldset>
+                </form>
             </div>
         </div>
 
@@ -344,22 +354,6 @@
             <audio id="audio" autoplay></audio> <!-- Removed 'muted' attribute -->
 
         </main>
-
-
-        
-        <button id="pcpBackButton">Back</button>
-
-        <div id="profileCustomizationPanel">
-            <div id="profileCustomizationPanelHeader">
-                <h2 id="pcTitle">Profile Customization</h2>
-            </div>
-            <hr id="pcHr">
-
-            <div class="pcp-option-panel">
-                <button id="pcpOption1">Option 1</button>
-                <button id="pcpOption2">Option 2</button>
-            </div>
-        </div>
 
         <script src="landingScript.js"></script>
     </body>
