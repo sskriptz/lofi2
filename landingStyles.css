@@ -1487,6 +1487,49 @@ main {
 }
 
 
+
+
+#profile-customization-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(40deg, rgba(2,0,36,1) 0%, rgba(0,0,0,1) 12%, rgba(87,104,107,1) 100%);
+    padding: 20px;
+    height: auto;
+    width: 30vw;
+    z-index: 5001;
+    opacity: 0; /* Initially invisible */
+    pointer-events: none; /* Prevent interaction */
+    border-radius: 15px;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 1);
+    max-height: 70vh;
+}
+
+#profile-customization-panel:hover {
+    transform: translate(-50%, -50%) scale(1.01);
+}
+
+.pcp-header {
+    color: white;
+}
+
+.pcp-option-panel {
+    margin-top: 7%;
+}
+
+#pp-customization-pane1 {
+    width: 100%;
+    color: white;
+}
+
+#pp-customization-pane1 fieldset {
+    border-radius: 15px;
+    border: 2px solid #ccc;
+}
+
+
 /* --------START OF MEDIA QUERIES-------------- */
 
 
