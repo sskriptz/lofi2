@@ -16,20 +16,20 @@ document.addEventListener("DOMContentLoaded", () => {
         messagingSenderId: "331670095312",
         appId: "1:331670095312:web:7538041673a10b1b4aa5d5"
     };
-
+    
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
-
+    
     // Get UI Elements
     const signInBtn = document.getElementById("sign-in-btn");
     const signOutBtn = document.getElementById("sign-out-btn");
     const userInfo = document.getElementById("user-info");
-
+    
     // Get UI Elements for Profile Panel
     let profilePanelUserInfo = document.getElementById("pp-user-info");
-
+    
     // Create the welcome panel element and style it dynamically (Frosted glass effect)
     const welcomePanel = document.createElement("div");
     welcomePanel.id = "welcome-panel";
@@ -50,12 +50,12 @@ document.addEventListener("DOMContentLoaded", () => {
     welcomePanel.style.fontFamily = "'Inconsolata', monospace"; // Inconsolata font
     welcomePanel.style.backdropFilter = "blur(15px)"; // Frosted glass effect
     document.body.appendChild(welcomePanel);
-
+    
     // Create the welcome message paragraph (Text in white)
     const welcomeMessage = document.createElement("p");
     welcomeMessage.style.color = "black"; // Ensure the text is white
     welcomePanel.appendChild(welcomeMessage);
-
+    
     // Create the continue button for the panel
     const closePanelBtn = document.createElement("button");
     closePanelBtn.textContent = "Continue";
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
     closePanelBtn.style.fontWeight = "bold";
     closePanelBtn.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
     welcomePanel.appendChild(closePanelBtn);
-
+    
     // Hover effect for button: border and color change
     closePanelBtn.onmouseover = () => {
         closePanelBtn.style.borderColor = "#ffffff"; // Border shows up on hover
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
         closePanelBtn.style.borderColor = "transparent"; // No border on mouse out
         closePanelBtn.style.backgroundColor = "#333333"; // Original background
     };
-
+    
     // Hover effect for the panel itself: subtle brightness increase
     welcomePanel.onmouseover = () => {
         welcomePanel.style.transform = "translateX(-50%) scale(1.05)"; // Slight scale-up
@@ -91,24 +91,23 @@ document.addEventListener("DOMContentLoaded", () => {
         welcomePanel.style.transform = "translateX(-50%) scale(1)"; // Return to normal scale
         welcomePanel.style.boxShadow = "0 10px 40px rgba(0, 0, 0, 0.3)"; // Return to original shadow
     };
-
+    
     // Add CSS for hover animation
     const style = document.createElement('style');
-    style.innerHTML = `
-        @keyframes hoverUpDown {
+    style.innerHTML = 
+        `@keyframes hoverUpDown {
             0% { transform: translateY(0); }
             50% { transform: translateY(10px); }
             100% { transform: translateY(0); }
-        }
-    `;
+        }`;
     document.head.appendChild(style);
-
+    
     // Hide sign-in button by default
     signInBtn.style.display = "none";
-
+    
     // Ensure UI Elements Are Always Visible (Development Mode)
     signOutBtn.style.display = "none"; // Initially hide the sign-out button
-
+    
     // Sign-in with Google (Manually triggered)
     function signInWithGoogle() {
         const provider = new firebase.auth.GoogleAuthProvider();
@@ -118,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.reload(); // Force a page reload to ensure fresh data
         }).catch(error => console.error("Sign-in error:", error));
     }
-
+    
     // Sign-out functionality
     signOutBtn.onclick = () => {
         auth.setPersistence(firebase.auth.Auth.Persistence.NONE).then(() => {
@@ -129,12 +128,12 @@ document.addEventListener("DOMContentLoaded", () => {
             }).catch(error => console.error("Sign-out error:", error));
         }).catch(error => console.error("Error clearing persistence:", error));
     };
-
+    
     // Check if the user is new or returning
     function checkIfNewUser(user) {
         const creationTime = user.metadata.creationTime;
         const lastSignInTime = user.metadata.lastSignInTime;
-
+    
         if (creationTime === lastSignInTime) {
             // New user
             welcomeMessage.innerHTML = `Welcome, ${user.displayName}!`;
@@ -142,7 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Returning user
             welcomeMessage.innerHTML = `Welcome back, ${user.displayName}!`;
         }
-
+    
         // Delay the animation of the welcome panel
         setTimeout(() => {
             // Show the welcome panel with slide-down animation
@@ -152,18 +151,18 @@ document.addEventListener("DOMContentLoaded", () => {
             welcomePanel.style.animation = "hoverUpDown 3s infinite ease-in-out"; // Infinite up and down animation
         }, 500); // Delay by 500ms
     }
-
+    
     // Close the welcome panel
     closePanelBtn.onclick = () => {
         welcomePanel.style.top = "-100px"; // Hide the panel again
         welcomePanel.style.opacity = "0"; // Make it invisible again
-
+    
         // After the panel is completely out of view, set it to display none
         setTimeout(() => {
             welcomePanel.style.display = "none"; // Remove the panel from the view
         }, 500); // Match the transition duration
     };
-
+    
     // Update UI after sign-in
     function updateUI(user) {
         if (user) {
@@ -173,30 +172,57 @@ document.addEventListener("DOMContentLoaded", () => {
             signOutBtn.style.display = "block"; // Show sign-out button after sign-in
         }
     }
-
+    
     // Reset UI after sign-out
     function resetUI() {
         userInfo.innerHTML = "";  // Clear user info
-        userId = null;
         signInBtn.style.display = "block";  // Show sign-in button after sign-out
         signOutBtn.style.display = "none";  // Hide sign-out button after sign-out
     }
-
+    
     // Check auth state on page load (for landing.html)
     auth.onAuthStateChanged(user => {
         console.log("Auth state changed:", user); // Log to check if this is firing
         if (user) {
             updateUI(user);
-            userId = user.uid;
             checkIfNewUser(user); // Check if it's a new or returning user
         } else {
             // Redirect to index.html if user is not signed in
             window.location.href = "index.html";  // Automatically redirect to index.html
         }
     });
-
+    
     // Add event listener to sign-in button to trigger signInWithGoogle function
     signInBtn.addEventListener("click", signInWithGoogle);
+    
+    // Get the input and save button elements for username change
+    const fnameInput = document.getElementById("fname"); // The input field for the new username
+    const saveBtn = document.getElementById("xxx"); // The save button
+    
+    // Function to handle username change
+    function changeUsername() {
+        const newUsername = fnameInput.value; // Get the value from the input field
+    
+        if (newUsername) {
+            const user = auth.currentUser;
+            user.updateProfile({
+                displayName: newUsername
+            }).then(() => {
+                console.log("Username updated successfully");
+                // Update UI to reflect new username
+                userInfo.innerHTML = `<img src="${user.photoURL}" width="50" style="border-radius:50%"><p>Hello, ${user.displayName}</p>`;
+                profilePanelUserInfo.innerHTML = `<img src="${user.photoURL}" width="50" style="border-radius:50%"><p>${user.displayName}</p>`;
+            }).catch(error => {
+                console.error("Error updating username:", error);
+            });
+        } else {
+            console.log("Username cannot be empty");
+        }
+    }
+    
+    // Add event listener for the save button to trigger the change
+    saveBtn.addEventListener("click", changeUsername);
+    
     
 
     
@@ -1109,11 +1135,19 @@ document.addEventListener("DOMContentLoaded", () => {
             openBtn.style.opacity = "0.5";
         });
 
+
+
+
+
         function closeProfilePanel() {
             profilePanel.style.opacity = "0";
             profilePanel.style.pointerEvents = "none";
+
             profilePanelOverlay.style.opacity = "0";
             profilePanelOverlay.style.pointerEvents = "none";
+
+            profileCustomizationPanel.style.opacity = "0";
+            profileCustomizationPanel.style.pointerEvents = "none";
 
             setTimeout(() => {
                 profilePanelOverlay.style.display = "none";
@@ -1126,8 +1160,29 @@ document.addEventListener("DOMContentLoaded", () => {
         profilePanelOverlay.addEventListener('click', closeProfilePanel);
 
 
+
+
+        let profileEditBtn = document.getElementById("ppbb-1");
+        let profileCustomizationPanel = document.getElementById("profile-customization-panel");
+
+        function openProfileCustomizationPanel() {
+            profilePanel.style.opacity = "0";
+            profilePanel.style.pointerEvents = "none";
+
+            profileCustomizationPanel.style.pointerEvents = "auto";
+
+            setTimeout(() => {
+                profileCustomizationPanel.style.opacity = "1";
+            }, 10);
+        }
+
+        profileEditBtn.addEventListener('click', openProfileCustomizationPanel);
+
+
         // ----------------------- END OF SIDE PANEL JS -------------------------
 
+        
+        
 
     
         // --------------- START OF CLOCK JS ---------------------
