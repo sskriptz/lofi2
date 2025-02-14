@@ -5,7 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <title>The Chill Zone</title>
         <link rel="stylesheet" type="text/css" href="landingStyles.css">
-        <script src="landingScript.js"></script>
         <link rel="icon" type="image/x-icon" href="https://i.postimg.cc/L57zM3xW/headphones.png">
 
         <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
@@ -48,7 +47,7 @@
 
         <div id="mySidebar" class="sidebar">
             <a href="javascript:void(0)" class="closeBtn" id="closeBtn">×</a>
-            <a href="#" id="profile-sp-btn">Profile 👤</a>
+            <a id="profile-sp-btn">Profile 👤</a>
             <a href="#" id="friends-sp-btn">Friends 👥</a>
             <a href="#" id="games-sp-btn">Games 🎮</a>
             <a href="#" id="appearance-sp-btn">Appearance 🎨</a>
@@ -104,6 +103,26 @@
         </div>
 
         <div id="profilePanelOverlay"></div>
+
+
+
+        <div id="profile-customization-panel">
+            <div class="pcp-header">
+                <h2>Profile Customization</h2>
+            </div>
+            <hr id="pcpHr">
+            <div class="pcp-option-panel">
+                <form id="pp-customization-pane1">
+                    <fieldset>
+                        <label for="fname">Username:</label>
+                        <input type="text" id="fname" name="fname" size="50">
+                        <button id="xxx" type="button">Save</button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+
+
 
         <main id="main">
             <div class="main-items">
@@ -330,5 +349,6 @@
             </div>
         </div>
 
+        <script src="landingScript.js"></script>
     </body>
 </html>
