@@ -1139,6 +1139,11 @@ main {
     font-size: 20px;
 }
 
+#user-info p:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 
 #sign-out-btn {
     border: none;
@@ -1266,8 +1271,8 @@ main {
     position: absolute;
     width: 30px;
     height: 30px;
-    top: 15px;
-    left: 15px;
+    top: 10px;
+    left: 10px;
     padding: 5px;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.4);
@@ -1284,7 +1289,7 @@ main {
     height: 100%;
     width: 0;
     position: fixed;
-    z-index: 1;
+    z-index: 5001;
     top: 0;
     left: 0;
     background-color: #111;
@@ -1314,13 +1319,13 @@ main {
     margin-left: 50px;
 }
 
-#sidePanelHr1, #sidePanelHr2 {
+#sidePanelHr1, #sidePanelHr2, #sidePanelHr3 {
     width: 80%;
 }
 
 #sign-out-sp-btn {
     color: red;
-    transition: 0.3.
+    transition: 0.3s;
 }
 
 #sign-out-sp-btn:hover {
@@ -1337,6 +1342,125 @@ main {
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 5000;
 }
+
+
+/* Profile Panel */
+
+
+#profilePanel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(40deg, rgba(2,0,36,1) 0%, rgba(0,0,0,1) 12%, rgba(87,104,107,1) 100%);
+    padding: 20px;
+    height: auto;
+    width: 30vw;
+    z-index: 5001;
+    opacity: 0; /* Initially invisible */
+    pointer-events: none; /* Prevent interaction */
+    border-radius: 15px;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 1);
+}
+
+#profilePanel:hover {
+    transform: translate(-50%, -50%) scale(1.01);
+}
+
+
+#profilePanelHeader {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    width: 100%;
+    /* background-color: red; */
+}
+
+#profilePanelOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 5000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+}
+
+#profilePanelClose {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+#profilePanelClose:hover {
+    transform: scale(1.2);
+}
+
+.pp-user-info-flex {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
+
+#pp-user-info {
+    display: flex;  
+    align-items: center;
+    width: 100%;
+    justify-content: flex-start;
+}
+
+#pp-user-info img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 15px;
+    /* margin-left: 10px; */
+}
+
+#pp-user-info p {
+    margin: 0;
+    color: white;
+    font-size: 20px;
+}
+
+
+#pp-aboutme-form {
+    color: white;
+}
+
+.pp-bottom-buttons {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 3%;
+}
+
+#ppbb-1 {
+    background-color: rgba(0, 0, 0, 0.7);
+    border: none;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+#pp-aboutme-form fieldset {
+    border-radius: 15px;
+    border: 2px solid #ccc;
+}
+
 
 /* --------START OF MEDIA QUERIES-------------- */
 
