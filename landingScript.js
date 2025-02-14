@@ -27,6 +27,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const signOutBtn = document.getElementById("sign-out-btn");
     const userInfo = document.getElementById("user-info");
 
+    // Get UI Elements for Profile Panel
+    let profilePanelUserInfo = document.getElementById("pp-user-info");
+
     // Create the welcome panel element and style it dynamically (Frosted glass effect)
     const welcomePanel = document.createElement("div");
     welcomePanel.id = "welcome-panel";
@@ -110,9 +113,8 @@ document.addEventListener("DOMContentLoaded", () => {
     function signInWithGoogle() {
         const provider = new firebase.auth.GoogleAuthProvider();
         auth.signInWithPopup(provider).then(result => {
-            const user = result.user;
+            let user = result.user;
             console.log("User signed in:", user);  // Log user data for debugging
-            userId = user.uid;
             window.location.reload(); // Force a page reload to ensure fresh data
         }).catch(error => console.error("Sign-in error:", error));
     }
@@ -165,7 +167,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Update UI after sign-in
     function updateUI(user) {
         if (user) {
-            userInfo.innerHTML = `<img src="${user.photoURL}" width="50" style="border-radius:50%"><p>Welcome, ${user.displayName}</p>`;
+            userInfo.innerHTML = `<img src="${user.photoURL}" width="50" style="border-radius:50%"><p>Hello, ${user.displayName}</p>`;
+            profilePanelUserInfo.innerHTML = `<img src="${user.photoURL}" width="50" style="border-radius:50%"><p>${user.displayName}</p>`;
             signInBtn.style.display = "none"; // Hide sign-in button after sign-in
             signOutBtn.style.display = "block"; // Show sign-out button after sign-in
         }
@@ -1057,21 +1060,73 @@ document.addEventListener("DOMContentLoaded", () => {
 
         openBtn.addEventListener('click', () => {
             sideBar.style.width = "230px";
-            // sidePanelOverlay.style.display = "block";
+            sidePanelOverlay.style.display = "block";
         });
 
         closeBtn.addEventListener('click', () => {
             sideBar.style.width = "0px";
+            sidePanelOverlay.style.display = "none";
         });
 
-        // function openNav() {
-        //     document.getElementById("mySidebar").style.width = "250px";
-        // }
-          
-        // function closeNav() {
-        //     document.getElementById("mySidebar").style.width = "0";
-        //     document.getElementById("main").style.marginLeft= "0";
-        // }
+        sidePanelOverlay.addEventListener('click', () => {
+            sideBar.style.width = "0px";
+            sidePanelOverlay.style.display = "none";
+        });
+
+
+        let signOutSpBtn = document.getElementById("sign-out-sp-btn");
+
+        signOutSpBtn.addEventListener('click', () => {
+            auth.setPersistence(firebase.auth.Auth.Persistence.NONE).then(() => {
+                auth.signOut().then(() => {
+                    // After setting persistence to NONE, sign out and reset the UI
+                    resetUI();
+                    window.location.href = "index.html";  // Redirect to index.html after sign-out
+                }).catch(error => console.error("Sign-out error:", error));
+            }).catch(error => console.error("Error clearing persistence:", error));
+        });
+
+
+
+        let profileSpBtn = document.getElementById("profile-sp-btn");
+        let profilePanel = document.getElementById("profilePanel");
+        let pfpPanelClose = document.getElementById("profilePanelClose");
+        let profilePanelOverlay = document.getElementById("profilePanelOverlay");
+
+        profileSpBtn.addEventListener('click', () => {
+            sideBar.style.width = "0px";
+            sidePanelOverlay.style.display = "none";
+
+            profilePanelOverlay.style.opacity = "1";
+            profilePanelOverlay.style.pointerEvents = "auto";
+            profilePanelOverlay.style.display = "block";
+
+            setTimeout(() => {
+                profilePanel.style.opacity = "1";
+                profilePanel.style.pointerEvents = "auto";
+            }, 50);
+
+            openBtn.style.pointerEvents = "none";
+            openBtn.style.opacity = "0.5";
+        });
+
+        function closeProfilePanel() {
+            profilePanel.style.opacity = "0";
+            profilePanel.style.pointerEvents = "none";
+            profilePanelOverlay.style.opacity = "0";
+            profilePanelOverlay.style.pointerEvents = "none";
+
+            setTimeout(() => {
+                profilePanelOverlay.style.display = "none";
+            }, 300);
+
+            openBtn.style.pointerEvents = "auto";
+            openBtn.style.opacity = "1";
+        }
+
+        pfpPanelClose.addEventListener('click', closeProfilePanel);
+        profilePanelOverlay.addEventListener('click', closeProfilePanel);
+
 
         // ----------------------- END OF SIDE PANEL JS -------------------------
 
