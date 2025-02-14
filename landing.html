@@ -41,22 +41,53 @@
             <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/eac505fd-b39a-4325-b2b2-74554c915c6f/d6thf5m-14809e46-d300-4ea4-bbcb-270d422fe4b3.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2VhYzUwNWZkLWIzOWEtNDMyNS1iMmIyLTc0NTU0YzkxNWM2ZlwvZDZ0aGY1bS0xNDgwOWU0Ni1kMzAwLTRlYTQtYmJjYi0yNzBkNDIyZmU0YjMuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.xVSN4etwVZekVmovyqH8s9IO83i8Q1ZgNmPokKlsp1Y" id="blizzardGifImage">
         </div>
 
+
+
+
         <img id="hm-icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png">
 
         <div id="mySidebar" class="sidebar">
             <a href="javascript:void(0)" class="closeBtn" id="closeBtn">×</a>
-            <a href="#">Profile 👤</a>
-            <a href="#">Games 🎮</a>
-            <a href="#">Appearance 🎨</a>
-            <a href="#">Settings ⚙️</a>
+            <a href="#" id="profile-sp-btn">Profile 👤</a>
+            <a href="#" id="friends-sp-btn">Friends 👥</a>
+            <a href="#" id="games-sp-btn">Games 🎮</a>
+            <a href="#" id="appearance-sp-btn">Appearance 🎨</a>
+            <a href="#" id="settings-sp-btn">Settings ⚙️</a>
             <hr id="sidePanelHr1">
-            <a href="#" id="sign-out-sp-btn">Sign Out</a>
+            <a href="#" id="fm-sp-btn">Focus Mode 🎯</a>
             <hr id="sidePanelHr2">
-            <a href="#">About</a>
-            <a href="#">Contact Us</a>
+            <a href="#" id="sign-out-sp-btn">Sign Out</a>
+            <hr id="sidePanelHr3">
+            <a href="#" id="about-sp-btn">About</a>
+            <a href="#" id="contact-sp-btn">Contact Us</a>
         </div>
 
         <div id="sidePanelOverlay"></div>
+
+
+
+
+        <div id="profilePanel">
+            <div id="profilePanelHeader">
+                <div id="pp-user-info" class="pp-user-info-flex"></div>
+                <button id="profilePanelClose">&times;</button>
+            </div>
+            <hr id="ppHr">
+            <div class="pp-option-panel">
+                <form id="pp-aboutme-form">
+                    <fieldset>
+                        <legend>About Me</legend>
+                        <p>Hello there user :D</p>
+                    </fieldset>
+                </form>
+
+                <div class="pp-bottom-buttons">
+                    <button id="ppbb-1">Customize Profile ✏️</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="profilePanelOverlay"></div>
 
         <main id="main">
             <div class="main-items">
