@@ -1090,7 +1090,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let profileSpBtn = document.getElementById("profile-sp-btn");
         let profilePanel = document.getElementById("profilePanel");
-        let pfpPanelClose = document.getElementById("profilePanelClose");
         let profilePanelOverlay = document.getElementById("profilePanelOverlay");
 
         profileSpBtn.addEventListener('click', () => {
@@ -1124,7 +1123,6 @@ document.addEventListener("DOMContentLoaded", () => {
             openBtn.style.opacity = "1";
         }
 
-        pfpPanelClose.addEventListener('click', closeProfilePanel);
         profilePanelOverlay.addEventListener('click', closeProfilePanel);
 
 
