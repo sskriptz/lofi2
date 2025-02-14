@@ -273,7 +273,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Add event listener to the save button
     aboutMeSaveBtn.addEventListener("click", saveAboutMe);
 
-    // Optional: Retrieve the "About Me" text when the user is signed in
+    // Retrieve the "About Me" text when the user is signed in
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
             // Fetch the user's "About Me" from Firestore
@@ -291,6 +291,65 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
     });
+
+
+    // Get elements for "Socials"
+    const socialsInput = document.getElementById("socials-input");
+    const socialsSaveBtn = document.getElementById("socials-save-btn");
+    const socialsOfficialP = document.getElementById("socials-official-p");
+
+    const maxSocialLines = 5; // Limit the number of lines for Socials
+
+    socialsInput.addEventListener("input", () => {
+        const lines = socialsInput.value.split("\n");
+
+        if (lines.length > maxSocialLines) {
+            socialsInput.value = lines.slice(0, maxSocialLines).join("\n");
+        }
+    });
+
+    // Function to save the Socials content to Firestore
+    function saveSocials() {
+        const socialsText = socialsInput.value.trim();
+        const user = firebase.auth().currentUser;
+
+        if (user && socialsText) {
+            db.collection("users").doc(user.uid).set({
+                socials: socialsText
+            }, { merge: true }) // Only update socials field without overwriting the whole document
+            .then(() => {
+                alert("Socials saved successfully!");
+                socialsOfficialP.innerHTML = socialsText.replace(/\n/g, "<br>"); // Preserve line breaks
+                socialsInput.value = ''; // Clear the input field
+            })
+            .catch(error => {
+                console.error("Error saving Socials:", error);
+            });
+        } else {
+            console.log("Socials is empty or user not signed in");
+        }
+    }
+
+    // Add event listener to the save button
+    socialsSaveBtn.addEventListener("click", saveSocials);
+
+    // Retrieve the "Socials" text when the user is signed in
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            db.collection("users").doc(user.uid).get()
+            .then(doc => {
+                if (doc.exists) {
+                    socialsOfficialP.innerHTML = (doc.data().socials || "You haven't set your Socials yet.").replace(/\n/g, "<br>");
+                } else {
+                    socialsOfficialP.innerHTML = "You haven't set your Socials yet.";
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching Socials:", error);
+            });
+        }
+    });
+
 
     
     
@@ -1104,38 +1163,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ------------------- START OF PROFILE EDIT JS ------------------
 
-    let profileEditIcon = document.getElementById("profileEdit-icon");
-    let pcp = document.getElementById("profileCustomizationPanel");
-    let main = document.getElementById("main");
-    let pcpBackButton = document.getElementById("pcpBackButton");
-
-    // Ensure back button event is added only once
-    pcpBackButton.addEventListener('click', () => {
-        pcp.style.opacity = "0"; // Start fading out
-        pcpBackButton.style.opacity = "0"; // Start fading out 
-
-        setTimeout(() => {
-            pcp.style.display = "none";
-            pcpBackButton.style.display = "none";
-            main.style.display = "flex";
-        }, 300); // Wait for transition
-    });
-
-    profileEditIcon.addEventListener('click', () => {
-        main.style.display = "none";
-
-        pcp.style.display = "flex";
-        pcp.style.flexDirection = "column";
-        pcp.style.alignItems = "center";
-        pcp.style.opacity = "0"; // Start invisible
-
-        pcpBackButton.style.display = "flex";
-
-        setTimeout(() => {
-            pcp.style.opacity = "1"; // Fade in
-            pcpBackButton.style.opacity = "1"; // Fade in
-        }, 10);
-    });
 
 
 
