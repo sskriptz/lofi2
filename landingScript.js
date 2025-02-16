@@ -9,373 +9,373 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Firebase Configuration
     
-    // const firebaseConfig = {
-    //     apiKey: "AIzaSyAwUAqTV07AahyfD55owmyAcxDG3TP_KnI",
-    //     authDomain: "lofi-168cb.firebaseapp.com",
-    //     projectId: "lofi-168cb",
-    //     storageBucket: "lofi-168cb.appspot.com",
-    //     messagingSenderId: "331670095312",
-    //     appId: "1:331670095312:web:7538041673a10b1b4aa5d5"
-    // };
+    const firebaseConfig = {
+        apiKey: "AIzaSyAwUAqTV07AahyfD55owmyAcxDG3TP_KnI",
+        authDomain: "lofi-168cb.firebaseapp.com",
+        projectId: "lofi-168cb",
+        storageBucket: "lofi-168cb.appspot.com",
+        messagingSenderId: "331670095312",
+        appId: "1:331670095312:web:7538041673a10b1b4aa5d5"
+    };
     
-    // // Initialize Firebase
-    // firebase.initializeApp(firebaseConfig);
-    // const auth = firebase.auth();
-    // const db = firebase.firestore();
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
 
     
-    // // Get UI Elements
-    // const signInBtn = document.getElementById("sign-in-btn");
-    // const signOutBtn = document.getElementById("sign-out-btn");
-    // const userInfo = document.getElementById("user-info");
+    // Get UI Elements
+    const signInBtn = document.getElementById("sign-in-btn");
+    const signOutBtn = document.getElementById("sign-out-btn");
+    const userInfo = document.getElementById("user-info");
     
-    // // Get UI Elements for Profile Panel
-    // let profilePanelUserInfo = document.getElementById("pp-user-info");
+    // Get UI Elements for Profile Panel
+    let profilePanelUserInfo = document.getElementById("pp-user-info");
     
-    // // Create the welcome panel element and style it dynamically (Frosted glass effect)
-    // const welcomePanel = document.createElement("div");
-    // welcomePanel.id = "welcome-panel";
-    // welcomePanel.style.position = "absolute"; // Absolute positioning to position it relative to the page
-    // welcomePanel.style.top = "-100px"; // Start off-screen
-    // welcomePanel.style.background = "rgba(255, 255, 255, 0.8)"; // Reduced transparency for frosted glass effect
-    // welcomePanel.style.borderRadius = "15px"; // Rounded corners
-    // welcomePanel.style.border = "3px solid rgba(0, 0, 0, 0.7)"; // Increased thickness of black border
-    // welcomePanel.style.padding = "20px";
-    // welcomePanel.style.fontSize = "18px";
-    // welcomePanel.style.textAlign = "center";
-    // welcomePanel.style.width = "80%";
-    // welcomePanel.style.maxWidth = "400px";
-    // welcomePanel.style.zIndex = "9999"; // On top of everything else
-    // welcomePanel.style.boxShadow = "0 10px 40px rgba(0, 0, 0, 0.3)"; // Soft shadow for depth
-    // welcomePanel.style.transition = "top 0.5s ease, opacity 0.3s ease, transform 0.3s ease"; // Smooth animation
-    // welcomePanel.style.opacity = "0"; // Start as invisible
-    // welcomePanel.style.fontFamily = "'Inconsolata', monospace"; // Inconsolata font
-    // welcomePanel.style.backdropFilter = "blur(15px)"; // Frosted glass effect
-    // document.body.appendChild(welcomePanel);
+    // Create the welcome panel element and style it dynamically (Frosted glass effect)
+    const welcomePanel = document.createElement("div");
+    welcomePanel.id = "welcome-panel";
+    welcomePanel.style.position = "absolute"; // Absolute positioning to position it relative to the page
+    welcomePanel.style.top = "-100px"; // Start off-screen
+    welcomePanel.style.background = "rgba(255, 255, 255, 0.8)"; // Reduced transparency for frosted glass effect
+    welcomePanel.style.borderRadius = "15px"; // Rounded corners
+    welcomePanel.style.border = "3px solid rgba(0, 0, 0, 0.7)"; // Increased thickness of black border
+    welcomePanel.style.padding = "20px";
+    welcomePanel.style.fontSize = "18px";
+    welcomePanel.style.textAlign = "center";
+    welcomePanel.style.width = "80%";
+    welcomePanel.style.maxWidth = "400px";
+    welcomePanel.style.zIndex = "9999"; // On top of everything else
+    welcomePanel.style.boxShadow = "0 10px 40px rgba(0, 0, 0, 0.3)"; // Soft shadow for depth
+    welcomePanel.style.transition = "top 0.5s ease, opacity 0.3s ease, transform 0.3s ease"; // Smooth animation
+    welcomePanel.style.opacity = "0"; // Start as invisible
+    welcomePanel.style.fontFamily = "'Inconsolata', monospace"; // Inconsolata font
+    welcomePanel.style.backdropFilter = "blur(15px)"; // Frosted glass effect
+    document.body.appendChild(welcomePanel);
     
-    // // Create the welcome message paragraph (Text in white)
-    // const welcomeMessage = document.createElement("p");
-    // welcomeMessage.style.color = "black"; // Ensure the text is white
-    // welcomePanel.appendChild(welcomeMessage);
+    // Create the welcome message paragraph (Text in white)
+    const welcomeMessage = document.createElement("p");
+    welcomeMessage.style.color = "black"; // Ensure the text is white
+    welcomePanel.appendChild(welcomeMessage);
     
-    // // Create the continue button for the panel
-    // const closePanelBtn = document.createElement("button");
-    // closePanelBtn.textContent = "Continue";
-    // closePanelBtn.style.background = "#333333"; // Dark background for button
-    // closePanelBtn.style.border = "2px solid transparent"; // Initially no border
-    // closePanelBtn.style.color = "white";
-    // closePanelBtn.style.fontSize = "20px";
-    // closePanelBtn.style.marginTop = "20px";
-    // closePanelBtn.style.cursor = "pointer";
-    // closePanelBtn.style.padding = "12px 30px"; // More padding for a rectangular button
-    // closePanelBtn.style.borderRadius = "8px"; // Curved edges
-    // closePanelBtn.style.transition = "background-color 0.3s ease, border-color 0.3s ease";
-    // closePanelBtn.style.fontWeight = "bold";
-    // closePanelBtn.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
-    // welcomePanel.appendChild(closePanelBtn);
+    // Create the continue button for the panel
+    const closePanelBtn = document.createElement("button");
+    closePanelBtn.textContent = "Continue";
+    closePanelBtn.style.background = "#333333"; // Dark background for button
+    closePanelBtn.style.border = "2px solid transparent"; // Initially no border
+    closePanelBtn.style.color = "white";
+    closePanelBtn.style.fontSize = "20px";
+    closePanelBtn.style.marginTop = "20px";
+    closePanelBtn.style.cursor = "pointer";
+    closePanelBtn.style.padding = "12px 30px"; // More padding for a rectangular button
+    closePanelBtn.style.borderRadius = "8px"; // Curved edges
+    closePanelBtn.style.transition = "background-color 0.3s ease, border-color 0.3s ease";
+    closePanelBtn.style.fontWeight = "bold";
+    closePanelBtn.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
+    welcomePanel.appendChild(closePanelBtn);
     
-    // // Hover effect for button: border and color change
-    // closePanelBtn.onmouseover = () => {
-    //     closePanelBtn.style.borderColor = "#ffffff"; // Border shows up on hover
-    //     closePanelBtn.style.backgroundColor = "#555555"; // Darker background on hover
-    // };
-    // closePanelBtn.onmouseout = () => {
-    //     closePanelBtn.style.borderColor = "transparent"; // No border on mouse out
-    //     closePanelBtn.style.backgroundColor = "#333333"; // Original background
-    // };
+    // Hover effect for button: border and color change
+    closePanelBtn.onmouseover = () => {
+        closePanelBtn.style.borderColor = "#ffffff"; // Border shows up on hover
+        closePanelBtn.style.backgroundColor = "#555555"; // Darker background on hover
+    };
+    closePanelBtn.onmouseout = () => {
+        closePanelBtn.style.borderColor = "transparent"; // No border on mouse out
+        closePanelBtn.style.backgroundColor = "#333333"; // Original background
+    };
     
-    // // Hover effect for the panel itself: subtle brightness increase
-    // welcomePanel.onmouseover = () => {
-    //     welcomePanel.style.transform = "translateX(-50%) scale(1.05)"; // Slight scale-up
-    //     welcomePanel.style.boxShadow = "0 15px 50px rgba(0, 0, 0, 0.4)"; // Increase shadow on hover
-    // };
-    // welcomePanel.onmouseout = () => {
-    //     welcomePanel.style.transform = "translateX(-50%) scale(1)"; // Return to normal scale
-    //     welcomePanel.style.boxShadow = "0 10px 40px rgba(0, 0, 0, 0.3)"; // Return to original shadow
-    // };
+    // Hover effect for the panel itself: subtle brightness increase
+    welcomePanel.onmouseover = () => {
+        welcomePanel.style.transform = "translateX(-50%) scale(1.05)"; // Slight scale-up
+        welcomePanel.style.boxShadow = "0 15px 50px rgba(0, 0, 0, 0.4)"; // Increase shadow on hover
+    };
+    welcomePanel.onmouseout = () => {
+        welcomePanel.style.transform = "translateX(-50%) scale(1)"; // Return to normal scale
+        welcomePanel.style.boxShadow = "0 10px 40px rgba(0, 0, 0, 0.3)"; // Return to original shadow
+    };
     
-    // // Add CSS for hover animation
-    // const style = document.createElement('style');
-    // style.innerHTML = 
-    //     `@keyframes hoverUpDown {
-    //         0% { transform: translateY(0); }
-    //         50% { transform: translateY(10px); }
-    //         100% { transform: translateY(0); }
-    //     }`;
-    // document.head.appendChild(style);
+    // Add CSS for hover animation
+    const style = document.createElement('style');
+    style.innerHTML = 
+        `@keyframes hoverUpDown {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+            100% { transform: translateY(0); }
+        }`;
+    document.head.appendChild(style);
     
-    // // Hide sign-in button by default
-    // signInBtn.style.display = "none";
+    // Hide sign-in button by default
+    signInBtn.style.display = "none";
     
-    // // Ensure UI Elements Are Always Visible (Development Mode)
-    // signOutBtn.style.display = "none"; // Initially hide the sign-out button
+    // Ensure UI Elements Are Always Visible (Development Mode)
+    signOutBtn.style.display = "none"; // Initially hide the sign-out button
     
-    // // Sign-in with Google (Manually triggered)
-    // function signInWithGoogle() {
-    //     const provider = new firebase.auth.GoogleAuthProvider();
-    //     auth.signInWithPopup(provider).then(result => {
-    //         let user = result.user;
-    //         console.log("User signed in:", user);  // Log user data for debugging
-    //         window.location.reload(); // Force a page reload to ensure fresh data
-    //     }).catch(error => console.error("Sign-in error:", error));
-    // }
+    // Sign-in with Google (Manually triggered)
+    function signInWithGoogle() {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        auth.signInWithPopup(provider).then(result => {
+            let user = result.user;
+            console.log("User signed in:", user);  // Log user data for debugging
+            window.location.reload(); // Force a page reload to ensure fresh data
+        }).catch(error => console.error("Sign-in error:", error));
+    }
     
-    // // Sign-out functionality
-    // signOutBtn.onclick = () => {
-    //     auth.setPersistence(firebase.auth.Auth.Persistence.NONE).then(() => {
-    //         auth.signOut().then(() => {
-    //             // After setting persistence to NONE, sign out and reset the UI
-    //             resetUI();
-    //             window.location.href = "index.html";  // Redirect to index.html after sign-out
-    //         }).catch(error => console.error("Sign-out error:", error));
-    //     }).catch(error => console.error("Error clearing persistence:", error));
-    // };
+    // Sign-out functionality
+    signOutBtn.onclick = () => {
+        auth.setPersistence(firebase.auth.Auth.Persistence.NONE).then(() => {
+            auth.signOut().then(() => {
+                // After setting persistence to NONE, sign out and reset the UI
+                resetUI();
+                window.location.href = "index.html";  // Redirect to index.html after sign-out
+            }).catch(error => console.error("Sign-out error:", error));
+        }).catch(error => console.error("Error clearing persistence:", error));
+    };
     
-    // // Check if the user is new or returning
-    // function checkIfNewUser(user) {
-    //     const creationTime = user.metadata.creationTime;
-    //     const lastSignInTime = user.metadata.lastSignInTime;
+    // Check if the user is new or returning
+    function checkIfNewUser(user) {
+        const creationTime = user.metadata.creationTime;
+        const lastSignInTime = user.metadata.lastSignInTime;
     
-    //     if (creationTime === lastSignInTime) {
-    //         // New user
-    //         welcomeMessage.innerHTML = `Welcome, ${user.displayName}!`;
-    //     } else {
-    //         // Returning user
-    //         welcomeMessage.innerHTML = `Welcome back, ${user.displayName}!`;
-    //     }
+        if (creationTime === lastSignInTime) {
+            // New user
+            welcomeMessage.innerHTML = `Welcome, ${user.displayName}!`;
+        } else {
+            // Returning user
+            welcomeMessage.innerHTML = `Welcome back, ${user.displayName}!`;
+        }
     
-    //     // Delay the animation of the welcome panel
-    //     setTimeout(() => {
-    //         // Show the welcome panel with slide-down animation
-    //         welcomePanel.style.opacity = "1"; // Make the panel visible
-    //         welcomePanel.style.top = "20px"; // Slide the panel down smoothly
-    //         // Apply the hover animation
-    //         welcomePanel.style.animation = "hoverUpDown 3s infinite ease-in-out"; // Infinite up and down animation
-    //     }, 500); // Delay by 500ms
-    // }
+        // Delay the animation of the welcome panel
+        setTimeout(() => {
+            // Show the welcome panel with slide-down animation
+            welcomePanel.style.opacity = "1"; // Make the panel visible
+            welcomePanel.style.top = "20px"; // Slide the panel down smoothly
+            // Apply the hover animation
+            welcomePanel.style.animation = "hoverUpDown 3s infinite ease-in-out"; // Infinite up and down animation
+        }, 500); // Delay by 500ms
+    }
     
-    // // Close the welcome panel
-    // closePanelBtn.onclick = () => {
-    //     welcomePanel.style.top = "-100px"; // Hide the panel again
-    //     welcomePanel.style.opacity = "0"; // Make it invisible again
+    // Close the welcome panel
+    closePanelBtn.onclick = () => {
+        welcomePanel.style.top = "-100px"; // Hide the panel again
+        welcomePanel.style.opacity = "0"; // Make it invisible again
     
-    //     // After the panel is completely out of view, set it to display none
-    //     setTimeout(() => {
-    //         welcomePanel.style.display = "none"; // Remove the panel from the view
-    //     }, 500); // Match the transition duration
-    // };
+        // After the panel is completely out of view, set it to display none
+        setTimeout(() => {
+            welcomePanel.style.display = "none"; // Remove the panel from the view
+        }, 500); // Match the transition duration
+    };
     
-    // // Update UI after sign-in
-    // function updateUI(user) {
-    //     if (user) {
-    //         userInfo.innerHTML = `<img src="${user.photoURL}" width="50" style="border-radius:50%"><p>Hello, ${user.displayName}</p>`;
-    //         profilePanelUserInfo.innerHTML = `<img src="${user.photoURL}" width="50" style="border-radius:50%"><p>${user.displayName}</p>`;
-    //         signInBtn.style.display = "none"; // Hide sign-in button after sign-in
-    //         signOutBtn.style.display = "block"; // Show sign-out button after sign-in
-    //     }
-    // }
+    // Update UI after sign-in
+    function updateUI(user) {
+        if (user) {
+            userInfo.innerHTML = `<img src="${user.photoURL}" width="50" style="border-radius:50%"><p>Hello, ${user.displayName}</p>`;
+            profilePanelUserInfo.innerHTML = `<img src="${user.photoURL}" width="50" style="border-radius:50%"><p>${user.displayName}</p>`;
+            signInBtn.style.display = "none"; // Hide sign-in button after sign-in
+            signOutBtn.style.display = "block"; // Show sign-out button after sign-in
+        }
+    }
     
-    // // Reset UI after sign-out
-    // function resetUI() {
-    //     userInfo.innerHTML = "";  // Clear user info
-    //     signInBtn.style.display = "block";  // Show sign-in button after sign-out
-    //     signOutBtn.style.display = "none";  // Hide sign-out button after sign-out
-    // }
+    // Reset UI after sign-out
+    function resetUI() {
+        userInfo.innerHTML = "";  // Clear user info
+        signInBtn.style.display = "block";  // Show sign-in button after sign-out
+        signOutBtn.style.display = "none";  // Hide sign-out button after sign-out
+    }
     
-    // // Check auth state on page load (for landing.html)
-    // auth.onAuthStateChanged(user => {
-    //     console.log("Auth state changed:", user); // Log to check if this is firing
-    //     if (user) {
-    //         updateUI(user);
-    //         checkIfNewUser(user); // Check if it's a new or returning user
-    //     } else {
-    //         // Redirect to index.html if user is not signed in
-    //         window.location.href = "index.html";  // Automatically redirect to index.html
-    //     }
-    // });
+    // Check auth state on page load (for landing.html)
+    auth.onAuthStateChanged(user => {
+        console.log("Auth state changed:", user); // Log to check if this is firing
+        if (user) {
+            updateUI(user);
+            checkIfNewUser(user); // Check if it's a new or returning user
+        } else {
+            // Redirect to index.html if user is not signed in
+            window.location.href = "index.html";  // Automatically redirect to index.html
+        }
+    });
     
-    // // Add event listener to sign-in button to trigger signInWithGoogle function
-    // signInBtn.addEventListener("click", signInWithGoogle);
+    // Add event listener to sign-in button to trigger signInWithGoogle function
+    signInBtn.addEventListener("click", signInWithGoogle);
     
-    // // Get the input and save button elements for username change
-    // const usernameInput = document.getElementById("username-input"); // The input field for the new username
-    // const usernameSaveBtn = document.getElementById("username-save-btn"); // The save button
+    // Get the input and save button elements for username change
+    const usernameInput = document.getElementById("username-input"); // The input field for the new username
+    const usernameSaveBtn = document.getElementById("username-save-btn"); // The save button
     
-    // // Function to handle username change
-    // function changeUsername() {
-    //     const newUsername = usernameInput.value; // Get the value from the input field
+    // Function to handle username change
+    function changeUsername() {
+        const newUsername = usernameInput.value; // Get the value from the input field
     
-    //     if (newUsername) {
-    //         const user = auth.currentUser;
-    //         user.updateProfile({
-    //             displayName: newUsername
-    //         }).then(() => {
-    //             alert("Username updated successfully!");
-    //             // Update UI to reflect new username
-    //             userInfo.innerHTML = `<img src="${user.photoURL}" width="50" style="border-radius:50%"><p>Hello, ${user.displayName}</p>`;
-    //             profilePanelUserInfo.innerHTML = `<img src="${user.photoURL}" width="50" style="border-radius:50%"><p>${user.displayName}</p>`;
-    //         }).catch(error => {
-    //             console.error("Error updating username:", error);
-    //         });
-    //     } else {
-    //         console.log("Username cannot be empty");
-    //     }
-    // }
+        if (newUsername) {
+            const user = auth.currentUser;
+            user.updateProfile({
+                displayName: newUsername
+            }).then(() => {
+                alert("Username updated successfully!");
+                // Update UI to reflect new username
+                userInfo.innerHTML = `<img src="${user.photoURL}" width="50" style="border-radius:50%"><p>Hello, ${user.displayName}</p>`;
+                profilePanelUserInfo.innerHTML = `<img src="${user.photoURL}" width="50" style="border-radius:50%"><p>${user.displayName}</p>`;
+            }).catch(error => {
+                console.error("Error updating username:", error);
+            });
+        } else {
+            console.log("Username cannot be empty");
+        }
+    }
     
-    // // Add event listener for the save button to trigger the change
-    // usernameSaveBtn.addEventListener("click", changeUsername); 
+    // Add event listener for the save button to trigger the change
+    usernameSaveBtn.addEventListener("click", changeUsername); 
 
 
 
-    // // Get elements for "About Me"
-    // const aboutMeInput = document.getElementById("aboutme-input");
-    // const aboutMeSaveBtn = document.getElementById("aboutme-save-btn");
-    // const aboutMeOfficialP = document.getElementById("aboutme-official-p");
+    // Get elements for "About Me"
+    const aboutMeInput = document.getElementById("aboutme-input");
+    const aboutMeSaveBtn = document.getElementById("aboutme-save-btn");
+    const aboutMeOfficialP = document.getElementById("aboutme-official-p");
 
 
-    // const maxLines = 5;  // Set the maximum number of lines allowed
+    const maxLines = 5;  // Set the maximum number of lines allowed
 
 
-    // aboutMeInput.addEventListener("input", () => {
-    //     const lines = aboutMeInput.value.split("\n"); // Split the value into lines by newline characters
+    aboutMeInput.addEventListener("input", () => {
+        const lines = aboutMeInput.value.split("\n"); // Split the value into lines by newline characters
         
-    //     if (lines.length > maxLines) {
-    //         // If the number of lines exceeds maxLines, limit the textarea to maxLines
-    //         // We only keep the first `maxLines` lines and join them back into a string
-    //         aboutMeInput.value = lines.slice(0, maxLines).join("\n");
-    //     }
-    // });
+        if (lines.length > maxLines) {
+            // If the number of lines exceeds maxLines, limit the textarea to maxLines
+            // We only keep the first `maxLines` lines and join them back into a string
+            aboutMeInput.value = lines.slice(0, maxLines).join("\n");
+        }
+    });
 
 
-    // // Function to save the About Me content to Firestore
-    // function saveAboutMe() {
-    //     const aboutMeText = aboutMeInput.value.trim(); // Get and trim the input text
-    //     const user = firebase.auth().currentUser; // Get the current user
+    // Function to save the About Me content to Firestore
+    function saveAboutMe() {
+        const aboutMeText = aboutMeInput.value.trim(); // Get and trim the input text
+        const user = firebase.auth().currentUser; // Get the current user
 
-    //     if (user && aboutMeText) {
-    //         // Save the text to Firestore under the user's document
-    //         db.collection("users").doc(user.uid).set({
-    //             aboutMe: aboutMeText
-    //         }, { merge: true }) // Use merge to only update the aboutMe field without overwriting the entire document
-    //         .then(() => {
-    //             alert("About Me saved successfully!");
-    //             // Update the "About Me" text in the HTML immediately
-    //             aboutMeOfficialP.textContent = aboutMeText;
-    //             aboutMeInput.value = ''; // Clear the input field
-    //         })
-    //         .catch(error => {
-    //             console.error("Error saving About Me:", error);
-    //         });
-    //     } else {
-    //         console.log("About Me is empty or user not signed in");
-    //     }
-    // }
+        if (user && aboutMeText) {
+            // Save the text to Firestore under the user's document
+            db.collection("users").doc(user.uid).set({
+                aboutMe: aboutMeText
+            }, { merge: true }) // Use merge to only update the aboutMe field without overwriting the entire document
+            .then(() => {
+                alert("About Me saved successfully!");
+                // Update the "About Me" text in the HTML immediately
+                aboutMeOfficialP.textContent = aboutMeText;
+                aboutMeInput.value = ''; // Clear the input field
+            })
+            .catch(error => {
+                console.error("Error saving About Me:", error);
+            });
+        } else {
+            console.log("About Me is empty or user not signed in");
+        }
+    }
 
-    // // Add event listener to the save button
-    // aboutMeSaveBtn.addEventListener("click", saveAboutMe);
+    // Add event listener to the save button
+    aboutMeSaveBtn.addEventListener("click", saveAboutMe);
 
-    // // Retrieve the "About Me" text when the user is signed in
-    // firebase.auth().onAuthStateChanged(user => {
-    //     if (user) {
-    //         // Fetch the user's "About Me" from Firestore
-    //         db.collection("users").doc(user.uid).get()
-    //         .then(doc => {
-    //             if (doc.exists) {
-    //                 // Display the saved "About Me" text if it exists
-    //                 aboutMeOfficialP.textContent = doc.data().aboutMe || "You haven't set an About Me yet.";
-    //             } else {
-    //                 aboutMeOfficialP.textContent = "You haven't set an About Me yet.";
-    //             }
-    //         })
-    //         .catch(error => {
-    //             console.error("Error fetching About Me:", error);
-    //         });
-    //     }
-    // });
-
-
-    // // Get elements for "Socials"
-    // const socialsInput = document.getElementById("socials-input");
-    // const socialsSaveBtn = document.getElementById("socials-save-btn");
-    // const socialsOfficialP = document.getElementById("socials-official-p");
-
-    // const maxSocialLines = 5; // Limit the number of lines for Socials
-
-    // socialsInput.addEventListener("input", () => {
-    //     const lines = socialsInput.value.split("\n");
-
-    //     if (lines.length > maxSocialLines) {
-    //         socialsInput.value = lines.slice(0, maxSocialLines).join("\n");
-    //     }
-    // });
-
-    // // Function to save the Socials content to Firestore
-    // function saveSocials() {
-    //     const socialsText = socialsInput.value.trim();
-    //     const user = firebase.auth().currentUser;
-
-    //     if (user && socialsText) {
-    //         db.collection("users").doc(user.uid).set({
-    //             socials: socialsText
-    //         }, { merge: true }) // Only update socials field without overwriting the whole document
-    //         .then(() => {
-    //             alert("Socials saved successfully!");
-    //             socialsOfficialP.innerHTML = socialsText.replace(/\n/g, "<br>"); // Preserve line breaks
-    //             socialsInput.value = ''; // Clear the input field
-    //         })
-    //         .catch(error => {
-    //             console.error("Error saving Socials:", error);
-    //         });
-    //     } else {
-    //         console.log("Socials is empty or user not signed in");
-    //     }
-    // }
-
-    // // Add event listener to the save button
-    // socialsSaveBtn.addEventListener("click", saveSocials);
-
-    // // Retrieve the "Socials" text when the user is signed in
-    // firebase.auth().onAuthStateChanged(user => {
-    //     if (user) {
-    //         db.collection("users").doc(user.uid).get()
-    //         .then(doc => {
-    //             if (doc.exists) {
-    //                 socialsOfficialP.innerHTML = (doc.data().socials || "You haven't set your Socials yet.").replace(/\n/g, "<br>");
-    //             } else {
-    //                 socialsOfficialP.innerHTML = "You haven't set your Socials yet.";
-    //             }
-    //         })
-    //         .catch(error => {
-    //             console.error("Error fetching Socials:", error);
-    //         });
-    //     }
-    // });
+    // Retrieve the "About Me" text when the user is signed in
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            // Fetch the user's "About Me" from Firestore
+            db.collection("users").doc(user.uid).get()
+            .then(doc => {
+                if (doc.exists) {
+                    // Display the saved "About Me" text if it exists
+                    aboutMeOfficialP.textContent = doc.data().aboutMe || "You haven't set an About Me yet.";
+                } else {
+                    aboutMeOfficialP.textContent = "You haven't set an About Me yet.";
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching About Me:", error);
+            });
+        }
+    });
 
 
-    // // Get the element to display account creation date
-    // const accCreationDateP = document.getElementById("acc-creation-date");
+    // Get elements for "Socials"
+    const socialsInput = document.getElementById("socials-input");
+    const socialsSaveBtn = document.getElementById("socials-save-btn");
+    const socialsOfficialP = document.getElementById("socials-official-p");
 
-    // // Function to format the date
-    // function formatDate(timestamp) {
-    //     const date = new Date(timestamp);
-    //     return date.toLocaleDateString("en-US", {  
-    //         year: "numeric",  
-    //         month: "long",  
-    //         day: "numeric"  
-    //     });
-    // }
+    const maxSocialLines = 5; // Limit the number of lines for Socials
 
-    // // Fetch and display account creation date when the user is signed in
-    // firebase.auth().onAuthStateChanged(user => {
-    //     if (user) {
-    //         const creationTimestamp = user.metadata.creationTime;
-    //         if (creationTimestamp) {
-    //             accCreationDateP.textContent = `Account Created On: ${formatDate(creationTimestamp)}`;
-    //         } else {
-    //             accCreationDateP.textContent = "Creation date not available.";
-    //         }
-    //     }
-    // });
+    socialsInput.addEventListener("input", () => {
+        const lines = socialsInput.value.split("\n");
+
+        if (lines.length > maxSocialLines) {
+            socialsInput.value = lines.slice(0, maxSocialLines).join("\n");
+        }
+    });
+
+    // Function to save the Socials content to Firestore
+    function saveSocials() {
+        const socialsText = socialsInput.value.trim();
+        const user = firebase.auth().currentUser;
+
+        if (user && socialsText) {
+            db.collection("users").doc(user.uid).set({
+                socials: socialsText
+            }, { merge: true }) // Only update socials field without overwriting the whole document
+            .then(() => {
+                alert("Socials saved successfully!");
+                socialsOfficialP.innerHTML = socialsText.replace(/\n/g, "<br>"); // Preserve line breaks
+                socialsInput.value = ''; // Clear the input field
+            })
+            .catch(error => {
+                console.error("Error saving Socials:", error);
+            });
+        } else {
+            console.log("Socials is empty or user not signed in");
+        }
+    }
+
+    // Add event listener to the save button
+    socialsSaveBtn.addEventListener("click", saveSocials);
+
+    // Retrieve the "Socials" text when the user is signed in
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            db.collection("users").doc(user.uid).get()
+            .then(doc => {
+                if (doc.exists) {
+                    socialsOfficialP.innerHTML = (doc.data().socials || "You haven't set your Socials yet.").replace(/\n/g, "<br>");
+                } else {
+                    socialsOfficialP.innerHTML = "You haven't set your Socials yet.";
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching Socials:", error);
+            });
+        }
+    });
+
+
+    // Get the element to display account creation date
+    const accCreationDateP = document.getElementById("acc-creation-date");
+
+    // Function to format the date
+    function formatDate(timestamp) {
+        const date = new Date(timestamp);
+        return date.toLocaleDateString("en-US", {  
+            year: "numeric",  
+            month: "long",  
+            day: "numeric"  
+        });
+    }
+
+    // Fetch and display account creation date when the user is signed in
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            const creationTimestamp = user.metadata.creationTime;
+            if (creationTimestamp) {
+                accCreationDateP.textContent = `Account Created On: ${formatDate(creationTimestamp)}`;
+            } else {
+                accCreationDateP.textContent = "Creation date not available.";
+            }
+        }
+    });
 
 
     //---------------------------------------------------------------------------
