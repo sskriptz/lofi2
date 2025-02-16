@@ -87,29 +87,18 @@ main {
 
 .column1 {
     flex-basis: 55%;
-    box-sizing: border-box;
-    flex-grow: 1;
 }
 
-.set-more-container {
+.settings-container {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1vh;
-    height: 100%;
 }
 
-.more-container {
-    margin-top: 1vh;
-}
-
-.more-icon, .settings-icon {
+.settings-icon {
     width: 2vw;
     background-color: red;
     border-radius: 10px;
-    padding: 3.515vh 0.517vw 3.515vh 0.517vw;
-    box-shadow: 3.333px 6.666px #000000;
+    padding: 160% 10px 160% 10px;
+    box-shadow: 5px 10px #000000;
     cursor: pointer;
 
     background: linear-gradient(90deg, #7341a9, #00ffa6);
@@ -118,10 +107,9 @@ main {
     transition: transform 0.5s ease-in-out, backdrop-filter 0.5s ease-in-out, box-shadow 0.5s ease-in-out, filter 0.5s ease-in-out;
 }
 
-.more-icon:hover, .settings-icon:hover {
+.settings-icon:hover {
     transform: scale(1.04);
     backdrop-filter: blur(2px);
-    box-shadow: 4px 6px black;
     filter: hue-rotate(45deg); /* Smooth color shift */
 }
 
@@ -1780,6 +1768,41 @@ main {
     opacity: 1;
 }
 
+
+.hmBtnTooltip {
+    position: absolute;
+    background-color: black;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.hmBtnTooltip.show {
+    opacity: 1;
+}
+
+
+.mainPageWebSettingsTooltip {
+    position: absolute;
+    background-color: black;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.mainPageWebSettingsTooltip.show {
+    opacity: 1;
+}
 
 /* --------START OF MEDIA QUERIES-------------- */
 
