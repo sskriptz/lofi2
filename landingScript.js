@@ -8,6 +8,9 @@ document.addEventListener("DOMContentLoaded", () => {
     
 
     // Firebase Configuration
+    
+
+
     const firebaseConfig = {
         apiKey: "AIzaSyAwUAqTV07AahyfD55owmyAcxDG3TP_KnI",
         authDomain: "lofi-168cb.firebaseapp.com",
@@ -349,6 +352,32 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
     });
+
+
+    // Get the element to display account creation date
+const accCreationDateP = document.getElementById("acc-creation-date");
+
+// Function to format the date
+function formatDate(timestamp) {
+    const date = new Date(timestamp);
+    return date.toLocaleDateString("en-US", {  
+        year: "numeric",  
+        month: "long",  
+        day: "numeric"  
+    });
+}
+
+// Fetch and display account creation date when the user is signed in
+firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+        const creationTimestamp = user.metadata.creationTime;
+        if (creationTimestamp) {
+            accCreationDateP.textContent = `Account Created On: ${formatDate(creationTimestamp)}`;
+        } else {
+            accCreationDateP.textContent = "Creation date not available.";
+        }
+    }
+});
 
 
     
@@ -1152,22 +1181,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-    // ------------------- START OF PROFILE ICON JS -----------------
-
-
-
-
-    // -------------------- END OF PROFILE ICON JS -------------------
-
-
-
     // ------------------- START OF PROFILE EDIT JS ------------------
 
-
+    
 
 
 
     // ------------------- END OF PROFILE EDIT JS ------------------
+
+
 
 
     // --------------------- START OF SIDE-PANEL JS ---------------------
@@ -1230,8 +1252,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-
-
     function closeProfilePanel() {
         profilePanel.style.opacity = "0";
         profilePanel.style.pointerEvents = "none";
@@ -1262,6 +1282,9 @@ document.addEventListener("DOMContentLoaded", () => {
         profilePanel.style.opacity = "0";
         profilePanel.style.pointerEvents = "none";
 
+        profilePanelOverlay.style.opacity = "1";
+        profilePanelOverlay.style.pointerEvents = "auto";
+
         profileCustomizationPanel.style.pointerEvents = "auto";
 
         setTimeout(() => {
@@ -1270,6 +1293,43 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     profileEditBtn.addEventListener('click', openProfileCustomizationPanel);
+
+
+
+
+    let mainScreenProfileCustomizationBtn = document.getElementById("profileEdit-icon");
+    
+    mainScreenProfileCustomizationBtn.addEventListener('click', () => {
+        profilePanelOverlay.style.opacity = "1";
+        profilePanelOverlay.style.pointerEvents = "auto";
+        profilePanelOverlay.style.display = "block";
+
+        setTimeout(() => {
+            profileCustomizationPanel.style.opacity = "1";
+            profileCustomizationPanel.style.pointerEvents = "auto";
+        }, 50);
+
+        openBtn.style.pointerEvents = "none";
+        openBtn.style.opacity = "0.5";
+    });
+
+
+
+    
+    document.getElementById("user-info").addEventListener("click", (event) => {
+        if (event.target.tagName === "P") {
+            profilePanelOverlay.style.opacity = "1";
+        profilePanelOverlay.style.pointerEvents = "auto";
+        profilePanelOverlay.style.display = "block";
+
+        setTimeout(() => {
+            profilePanel.style.opacity = "1";
+            profilePanel.style.pointerEvents = "auto";
+        }, 50);
+        }
+    });
+    
+    
 
 
     // ----------------------- END OF SIDE PANEL JS -------------------------
