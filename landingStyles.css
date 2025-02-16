@@ -1745,6 +1745,42 @@ main {
 }
 
 
+.profileEditMainPageTooltip {
+    position: absolute;
+    background-color: black;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.profileEditMainPageTooltip.show {
+    opacity: 1;
+}
+
+
+.profileSettingsMainPageTooltip {
+    position: absolute;
+    background-color: black;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.profileSettingsMainPageTooltip.show {
+    opacity: 1;
+}
+
+
 /* --------START OF MEDIA QUERIES-------------- */
 
 
