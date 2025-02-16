@@ -89,36 +89,6 @@ main {
     flex-basis: 55%;
 }
 
-.settings-container {
-    display: flex;
-}
-
-.settings-icon {
-    width: 2vw;
-    background-color: red;
-    border-radius: 10px;
-    padding: 160% 10px 160% 10px;
-    box-shadow: 5px 10px #000000;
-    cursor: pointer;
-
-    background: linear-gradient(90deg, #7341a9, #00ffa6);
-    background-size: 200% 100%;
-    animation: gradientAnimation 6s infinite ease-in-out;
-    transition: transform 0.5s ease-in-out, backdrop-filter 0.5s ease-in-out, box-shadow 0.5s ease-in-out, filter 0.5s ease-in-out;
-}
-
-.settings-icon:hover {
-    transform: scale(1.04);
-    backdrop-filter: blur(2px);
-    filter: hue-rotate(45deg); /* Smooth color shift */
-}
-
-@keyframes gradientAnimation {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
 /* Base Styles */
 .timeContainer1 {
     display: flex;
