@@ -355,34 +355,52 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // Get the element to display account creation date
-const accCreationDateP = document.getElementById("acc-creation-date");
+    const accCreationDateP = document.getElementById("acc-creation-date");
 
-// Function to format the date
-function formatDate(timestamp) {
-    const date = new Date(timestamp);
-    return date.toLocaleDateString("en-US", {  
-        year: "numeric",  
-        month: "long",  
-        day: "numeric"  
-    });
-}
-
-// Fetch and display account creation date when the user is signed in
-firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-        const creationTimestamp = user.metadata.creationTime;
-        if (creationTimestamp) {
-            accCreationDateP.textContent = `Account Created On: ${formatDate(creationTimestamp)}`;
-        } else {
-            accCreationDateP.textContent = "Creation date not available.";
-        }
+    // Function to format the date
+    function formatDate(timestamp) {
+        const date = new Date(timestamp);
+        return date.toLocaleDateString("en-US", {  
+            year: "numeric",  
+            month: "long",  
+            day: "numeric"  
+        });
     }
-});
+
+    // Fetch and display account creation date when the user is signed in
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            const creationTimestamp = user.metadata.creationTime;
+            if (creationTimestamp) {
+                accCreationDateP.textContent = `Account Created On: ${formatDate(creationTimestamp)}`;
+            } else {
+                accCreationDateP.textContent = "Creation date not available.";
+            }
+        }
+    });
 
 
+    //---------------------------------------------------------------------------
     
-    
-    // ------------- END OF PARTICLES BUTTONS JS ---------------
+
+    var rainParticlesCheck = document.getElementById("particlesButtonRain");
+    var snowParticlesCheck = document.getElementById("particlesButtonSnow");
+    var stormWeatherCheck = document.getElementById("weatherButtonsStorm");
+    var blizzardWeatherCheck = document.getElementById("weatherButtonsBlizzard");
+
+    const rainGifImage = document.getElementById("rainGifImage");
+    const rainGif = document.getElementById("rainGif");
+    const particlesButtonRain = document.getElementById("particlesButtonRain");
+    const snowGifImage = document.getElementById("snowGifImage");
+    const snowGif = document.getElementById("snowGif");
+    const particlesButtonSnow = document.getElementById("particlesButtonSnow");
+    const blizzardGifImage = document.getElementById("blizzardGifImage");
+    const blizzardGif = document.getElementById("blizzardGif");
+    const weatherButtonsBlizzard = document.getElementById("weatherButtonsBlizzard");
+    const weatherButtonsStorm = document.getElementById("weatherButtonsStorm");
+
+
+    // ------------- START OF PARTICLES BUTTONS JS ----------------
 
     function enableRainParticles() {
 
@@ -438,6 +456,10 @@ firebase.auth().onAuthStateChanged(user => {
         particlesButtonSnow.addEventListener("click", enableSnowParticles);
     }
 
+    // ------------- END OF PARTICLES BUTTONS JS ---------------
+
+
+
 
 
     // ------------- START OF WEATHER BUTTONS JS ------------------
@@ -465,12 +487,11 @@ firebase.auth().onAuthStateChanged(user => {
     if (weatherButtonsBlizzard) {
         weatherButtonsBlizzard.addEventListener("click", enableBlizzard);
     }
-    
-    
-    
-    
-    
+
+
+
     function enableStorm() {
+
         if (rainGifImage.style.visibility === "visible") {
             // Hide the rain GIFs and change button text to "Enable"
             rainGifImage.style.visibility = "hidden";
@@ -503,7 +524,6 @@ firebase.auth().onAuthStateChanged(user => {
     // ------------ END OF WEATHER BUTTONS JS ------------------
 
 
-    
     
     
     
@@ -1295,10 +1315,45 @@ firebase.auth().onAuthStateChanged(user => {
     profileEditBtn.addEventListener('click', openProfileCustomizationPanel);
 
 
+    // ---------------- END OF SIDE-PANEL JS ---------------------
+
+
+
+    // ---------------- MISC START ---------------------
 
 
     let mainScreenProfileCustomizationBtn = document.getElementById("profileEdit-icon");
-    
+
+    mainScreenProfileCustomizationBtn.addEventListener('mouseenter', () => {
+        let tooltipText = mainScreenProfileCustomizationBtn.getAttribute("data-tooltip");
+        let tooltip = document.createElement("div");
+        tooltip.className = "profileEditMainPageTooltip";
+        tooltip.textContent = tooltipText;
+
+        document.body.appendChild(tooltip);
+
+        // Position tooltip above the profile edit icon
+        let rect = mainScreenProfileCustomizationBtn.getBoundingClientRect();
+        tooltip.style.left = rect.left + window.scrollX + (rect.width / 2) - (tooltip.offsetWidth / 2) + "px";
+        tooltip.style.top = rect.top + window.scrollY - tooltip.offsetHeight - 5 + "px";
+
+        setTimeout(() => {
+            tooltip.classList.add("show");
+        }, 10);
+
+        mainScreenProfileCustomizationBtn.tooltipElement = tooltip;
+    });
+
+    mainScreenProfileCustomizationBtn.addEventListener('mouseleave', () => {
+        if (mainScreenProfileCustomizationBtn.tooltipElement) {
+            mainScreenProfileCustomizationBtn.tooltipElement.classList.remove("show");
+
+            setTimeout(() => {
+                mainScreenProfileCustomizationBtn.tooltipElement.remove();
+            }, 300);
+        }
+    });
+
     mainScreenProfileCustomizationBtn.addEventListener('click', () => {
         profilePanelOverlay.style.opacity = "1";
         profilePanelOverlay.style.pointerEvents = "auto";
@@ -1313,14 +1368,12 @@ firebase.auth().onAuthStateChanged(user => {
         openBtn.style.opacity = "0.5";
     });
 
-
-
     
     document.getElementById("user-info").addEventListener("click", (event) => {
         if (event.target.tagName === "P") {
             profilePanelOverlay.style.opacity = "1";
-        profilePanelOverlay.style.pointerEvents = "auto";
-        profilePanelOverlay.style.display = "block";
+            profilePanelOverlay.style.pointerEvents = "auto";
+            profilePanelOverlay.style.display = "block";
 
         setTimeout(() => {
             profilePanel.style.opacity = "1";
@@ -1328,12 +1381,42 @@ firebase.auth().onAuthStateChanged(user => {
         }, 50);
         }
     });
+
+
+    let mainScreenProfileSettingsBtn = document.getElementById("profileSettings-icon");
+
+    mainScreenProfileSettingsBtn.addEventListener('mouseenter', () => {
+        let tooltipText = mainScreenProfileSettingsBtn.getAttribute("data-tooltip");
+        let tooltip = document.createElement("div");
+        tooltip.className = "profileSettingsMainPageTooltip";
+        tooltip.textContent = tooltipText;
+
+        document.body.appendChild(tooltip);
+
+        // Position tooltip above the profile edit icon
+        let rect = mainScreenProfileSettingsBtn.getBoundingClientRect();
+        tooltip.style.left = rect.left + window.scrollX + (rect.width / 2) - (tooltip.offsetWidth / 2) + "px";
+        tooltip.style.top = rect.top + window.scrollY - tooltip.offsetHeight - 5 + "px";
+
+        setTimeout(() => {
+            tooltip.classList.add("show");
+        }, 10);
+
+        mainScreenProfileSettingsBtn.tooltipElement = tooltip;
+    });
+
+    mainScreenProfileSettingsBtn.addEventListener('mouseleave', () => {
+        if (mainScreenProfileSettingsBtn.tooltipElement) {
+            mainScreenProfileSettingsBtn.tooltipElement.classList.remove("show");
+
+            setTimeout(() => {
+                mainScreenProfileSettingsBtn.tooltipElement.remove();
+            }, 300);
+        }
+    });
+
     
-    
-
-
-    // ----------------------- END OF SIDE PANEL JS -------------------------
-
+    // ---------------- MISC END ---------------------
         
         
 
