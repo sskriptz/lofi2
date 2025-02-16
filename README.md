@@ -10,7 +10,7 @@ This is the official lofi website repository that will be used for now. All comm
  - If the user joins and is new, it redirects to a sign in page as you cannot access the main website without signing in.
 
 **Future Plans:**
- - Find a way to customize profile even more (Profile Picture, Banner Image, Profile Panel Background, Profile Effects)
+ - Find a way to customize profile even more (Profile Picture, Banner Image, Profile Panel Background, Profile Effects, Badges)
  - Add friending and a chat feature
  - Add an option for the user to select their music genre
  - Add minigames to play when bored
@@ -19,3 +19,7 @@ This is the official lofi website repository that will be used for now. All comm
  - Add a pane that allows customization for the whole website based on the user's preferences
  - Add an about me page and a contact us page
  - Add settings pane for the whole website that includes Google Account settings for the site
+ - Add notifications to the website for example when the user gets a new friend request
+ - Improve the To-Do List panel and add more features - Make sure to allow customization for the alarm sound
+ - Add a calendar to list important dates
+ - Add a repeat feature to the audio player to listen to songs on repeat
