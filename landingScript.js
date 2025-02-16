@@ -9,8 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Firebase Configuration
     
-
-
     const firebaseConfig = {
         apiKey: "AIzaSyAwUAqTV07AahyfD55owmyAcxDG3TP_KnI",
         authDomain: "lofi-168cb.firebaseapp.com",
@@ -1029,75 +1027,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // ---------------- START OF MORE BUTTON JS ---------------
 
-    const moreBtn = document.getElementById("more-btn");
-
-    moreBtn.addEventListener('click', () => {
-
-        const morePanelOverlay = document.createElement('div');
-        morePanelOverlay.style.position = "fixed";
-        morePanelOverlay.style.top = "0";
-        morePanelOverlay.style.left = "0";
-        morePanelOverlay.style.width = "100vw";
-        morePanelOverlay.style.height = "100vh";
-        morePanelOverlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)"; // dark semi-transparent eh
-        morePanelOverlay.style.zIndex = "400"; // making sure it is behind the panel
-        morePanelOverlay.style.transition = "opacity 0.3s ease-in-out";
-
-
-        const morePanel = document.createElement('div');
-        morePanel.style.height = "70vh";
-        morePanel.style.width = "70vw";
-        morePanel.style.zIndex = "500";
-        morePanel.style.backgroundColor = "black";
-        morePanel.style.position = "absolute";
-        morePanel.style.top = "50%";
-        morePanel.style.left = "50%";
-        morePanel.style.display = "flex";
-        morePanel.style.justifyContent = "center";
-        morePanel.style.alignItems = "center";
-        morePanel.style.transform = "translate(-50%, -50%)";
-        morePanel.style.borderRadius = "15px";
-        morePanel.style.transition = "transform 0.3s ease-in-out";
-
-
-        morePanel.addEventListener("mouseover", () => {
-            morePanel.style.transform = "translate(-50%, -50%) scale(1.02)";
-        });
-
-        morePanel.addEventListener("mouseout", () => {
-            morePanel.style.transform = "translate(-50%, -50%) scale(1)";
-        });
-
-
-
-        const morePanelClose = document.createElement('button');
-        morePanelClose.style.height = "30px";
-        morePanelClose.style.width = "50px";
-        morePanelClose.innerHTML = "&times";
-        morePanelClose.style.fontSize = "20px";
-        morePanelClose.style.border = "none";
-        morePanelClose.style.transition = "transform 0.3s ease-in-out";
-        morePanelClose.style.cursor = "pointer";
-        morePanelClose.style.borderRadius = "10px";
-        
-        morePanelClose.addEventListener("mouseover", () => {
-            morePanelClose.style.transform = "scale(1.15)";
-        });
-
-        morePanelClose.addEventListener("mouseout", () => {
-            morePanelClose.style.transform = "scale(1)";
-        });
-
-        morePanelClose.addEventListener('click', () => {
-            morePanel.remove();
-            morePanelOverlay.remove();
-        });
-
-
-        document.body.appendChild(morePanel);
-        document.body.appendChild(morePanelOverlay);
-        morePanel.appendChild(morePanelClose);
-    });
+    
 
 
 
@@ -1319,7 +1249,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-    // ---------------- MISC START ---------------------
+    // ---------------- TOOLTIPS START ---------------------
 
 
     let mainScreenProfileCustomizationBtn = document.getElementById("profileEdit-icon");
@@ -1393,7 +1323,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         document.body.appendChild(tooltip);
 
-        // Position tooltip above the profile edit icon
         let rect = mainScreenProfileSettingsBtn.getBoundingClientRect();
         tooltip.style.left = rect.left + window.scrollX + (rect.width / 2) - (tooltip.offsetWidth / 2) + "px";
         tooltip.style.top = rect.top + window.scrollY - tooltip.offsetHeight - 5 + "px";
@@ -1415,8 +1344,76 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+
+
+    let hmMenuBtn = document.getElementById("hm-icon");
+
+    hmMenuBtn.addEventListener('mouseenter', () => {
+        let tooltipText = hmMenuBtn.getAttribute("data-tooltip");
+        let tooltip = document.createElement("div");
+        tooltip.className = "hmBtnTooltip";
+        tooltip.textContent = tooltipText;
     
-    // ---------------- MISC END ---------------------
+        document.body.appendChild(tooltip);
+    
+        // Position tooltip to the right of the hmMenuBtn
+        let rect = hmMenuBtn.getBoundingClientRect();
+        tooltip.style.left = rect.right + window.scrollX + 5 + "px"; // 5px gap to the right
+        tooltip.style.top = rect.top + window.scrollY + (rect.height / 2) - (tooltip.offsetHeight / 2) + "px"; // Centered vertically
+    
+        setTimeout(() => {
+            tooltip.classList.add("show");
+        }, 10);
+    
+        hmMenuBtn.tooltipElement = tooltip;
+    });
+    
+    hmMenuBtn.addEventListener('mouseleave', () => {
+        if (hmMenuBtn.tooltipElement) {
+            hmMenuBtn.tooltipElement.classList.remove("show");
+
+            setTimeout(() => {
+                hmMenuBtn.tooltipElement.remove();
+            }, 300);
+        }
+    });
+
+
+
+    let mainPageWebSettingsBtn = document.getElementById("settings-btn");
+
+    mainPageWebSettingsBtn.addEventListener('mouseenter', () => {
+        let tooltipText = mainPageWebSettingsBtn.getAttribute("data-tooltip");
+        let tooltip = document.createElement("div");
+        tooltip.className = "hmBtnTooltip";
+        tooltip.textContent = tooltipText;
+    
+        document.body.appendChild(tooltip);
+    
+        // Position tooltip to the right of the mainPageWebSettingsBtn
+        let rect = mainPageWebSettingsBtn.getBoundingClientRect();
+        tooltip.style.left = rect.right + window.scrollX + 5 + "px"; // 5px gap to the right
+        tooltip.style.top = rect.top + window.scrollY + (rect.height / 2) - (tooltip.offsetHeight / 2) + "px"; // Centered vertically
+    
+        setTimeout(() => {
+            tooltip.classList.add("show");
+        }, 10);
+    
+        mainPageWebSettingsBtn.tooltipElement = tooltip;
+    });
+    
+    mainPageWebSettingsBtn.addEventListener('mouseleave', () => {
+        if (mainPageWebSettingsBtn.tooltipElement) {
+            mainPageWebSettingsBtn.tooltipElement.classList.remove("show");
+
+            setTimeout(() => {
+                mainPageWebSettingsBtn.tooltipElement.remove();
+            }, 300);
+        }
+    });
+
+    
+    // ---------------- TOOLTIPS END ---------------------
         
         
 
